@@ -3,7 +3,7 @@ using System.Collections;
 
 public class MapGenerator : MonoBehaviour {
 
-	public enum DrawMode {NoiseMap, ColourMap};
+	public enum DrawMode {NoiseMap, ColourMap, MeshMap};
 	public DrawMode drawMode;
 
 	public int mapWidth;
@@ -39,10 +39,28 @@ public class MapGenerator : MonoBehaviour {
 		}
 
 		MapDisplay display = FindObjectOfType<MapDisplay> ();
-		if (drawMode == DrawMode.NoiseMap) {
-			display.DrawTexture (TextureGenerator.TextureFromHeightMap(noiseMap));
-		} else if (drawMode == DrawMode.ColourMap) {
+
+		switch (drawMode) {
+
+		case DrawMode.ColourMap:
+
 			display.DrawTexture (TextureGenerator.TextureFromColourMap(colourMap, mapWidth, mapHeight));
+
+			break;
+		
+		case DrawMode.NoiseMap:
+			
+			display.DrawTexture (TextureGenerator.TextureFromHeightMap(noiseMap));
+
+			break;
+		
+		case DrawMode.MeshMap:
+
+			display.DrawMesh (MeshGenerator.GenerateTerrainMesh (noiseMap), TextureGenerator.TextureFromColourMap (colourMap, mapWidth, mapHeight));
+			break;
+		}
+		if (drawMode == DrawMode.NoiseMap) {
+		} else if (drawMode == DrawMode.ColourMap) {
 		}
 	}
 

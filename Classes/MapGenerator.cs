@@ -23,6 +23,7 @@ public class MapGenerator : MonoBehaviour {
 	public TerrainType[] regions;
 
 	public void GenerateMap() {
+
 		float[,] noiseMap = Noise.GenerateNoiseMap (mapWidth, mapHeight, seed, noiseScale, octaves, persistance, lacunarity, offset);
 
 		Color[] colourMap = new Color[mapWidth * mapHeight];
@@ -58,9 +59,6 @@ public class MapGenerator : MonoBehaviour {
 
 			display.DrawMesh (MeshGenerator.GenerateTerrainMesh (noiseMap), TextureGenerator.TextureFromColourMap (colourMap, mapWidth, mapHeight));
 			break;
-		}
-		if (drawMode == DrawMode.NoiseMap) {
-		} else if (drawMode == DrawMode.ColourMap) {
 		}
 	}
 

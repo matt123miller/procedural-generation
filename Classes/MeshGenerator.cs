@@ -3,7 +3,7 @@ using System.Collections;
 
 public static class MeshGenerator
 {
-    public static MeshData GenerateTerrainMesh(float[,] heightMap)
+    public static MeshData GenerateTerrainMesh(float[,] heightMap, float heightMultiplier, AnimationCurve heightCurve, int lodModifier)
     {
         int width = heightMap.GetLength(0);
         int height = heightMap.GetLength(1);
@@ -11,20 +11,25 @@ public static class MeshGenerator
         float topLeftX = (width - 1) / -2f;
         float topLeftZ = (height - 1) / 2f;
 
-        MeshData meshData = new MeshData(width, height);
+        int meshLodResoltuionModifier = (lodModifier == 0) ? 1 : 2 * lodModifier;
+        int vertsPerLod = (width - 1) / meshLodResoltuionModifier + 1;
+
+        MeshData meshData = new MeshData(vertsPerLod, vertsPerLod);
         int vertIndex = 0;
 
-        for (int y = 0; y < height; y++)
+        for (int y = 0; y < height; y += meshLodResoltuionModifier)
         {
-            for (int x = 0; x < width; x++)
+            for (int x = 0; x < width; x += meshLodResoltuionModifier)
             {
-                meshData.vertices[vertIndex] = new Vector3(topLeftX + x, heightMap[x, y], topLeftZ - y);
+                var vertHeight = heightCurve.Evaluate(heightMap[x, y]) * heightMultiplier;
+
+                meshData.vertices[vertIndex] = new Vector3(topLeftX + x, vertHeight, topLeftZ - y);
                 meshData.uvs[vertIndex] = new Vector2(x / (float)width, y / (float)height);
 
                 if ((x < width - 1) && (y < height - 1))
                 {
-                    meshData.AddTriangle(vertIndex, vertIndex + width + 1, vertIndex + width);
-                    meshData.AddTriangle(vertIndex + width + 1, vertIndex, vertIndex + 1);
+                    meshData.AddTriangle(vertIndex, vertIndex + vertsPerLod + 1, vertIndex + vertsPerLod);
+                    meshData.AddTriangle(vertIndex + vertsPerLod + 1, vertIndex, vertIndex + 1);
                 }
 
                 vertIndex++;

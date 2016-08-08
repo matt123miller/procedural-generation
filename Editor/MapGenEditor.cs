@@ -18,7 +18,13 @@ public class MapGeneratorEditor : Editor
             }
         }
 
-		if (GUILayout.Button ("Generate")) {
+        if (GUILayout.Button("Randomise Seed"))
+        {
+            var rand = new System.Random();
+            mapGen.seed = rand.Next();
+            mapGen.GenerateMap();
+        }
+        if (GUILayout.Button ("Generate")) {
 			mapGen.GenerateMap ();
 		}
     }

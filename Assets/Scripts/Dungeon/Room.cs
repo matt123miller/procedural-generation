@@ -5,20 +5,16 @@ using UnityEngine;
 namespace Dungeon
 {
 
-    public class Room : ScriptableObject
+    public class Room : MonoBehaviour
     {
         public int width, height;
-        [MinMaxRange(4, 10)]
-        public RangedFloat widthRange;
-        [MinMaxRange(4, 10)]
-        public RangedFloat heightRange;
 
         public Transform[,] tiles;
 
-        private void OnEnable()
+        public void SetupRoom(int _width, int _height)
         {
-            width = (int)Random.Range(widthRange.minValue, widthRange.maxValue);
-            height = (int)Random.Range(heightRange.minValue, heightRange.maxValue);
+            width = _width;
+            height = _height;
         }
 
         public GameObject[,] GenerateTiles()
@@ -30,7 +26,7 @@ namespace Dungeon
                 for (int h = 0; h < height; h++)
                 {
                     var tile = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                    tile.transform.position = new Vector2(w, h);
+                    tile.transform.position = new Vector3(w, 0, h);
                     tiles[w, h] = tile;
                 }
             }

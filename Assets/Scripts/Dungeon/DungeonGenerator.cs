@@ -12,7 +12,10 @@ namespace Dungeon
 
         public Transform dungeonParent;
 
+        public LayerMask wallMask, floorMask;
+        public Material[] materials;
         public int totalRooms = 10;
+        public List<Room> rooms = new List<Room>();
 
         private void Awake()
         {
@@ -29,17 +32,11 @@ namespace Dungeon
 
                 int w = Random.Range(minWidth, maxWidth);
                 int h = Random.Range(minHeight, maxHeight);
+                var mat = materials[Random.Range(0, materials.Length)];
 
                 var room = parent.AddComponent<Room>();
-                room.SetupRoom(w, h);
-                var tiles = room.GenerateTiles();
-                var walls = room.GenerateWalls();
-
-                print(tiles);
-                foreach (var tile in tiles)
-                {
-                    tile.transform.SetParent(parent.transform);
-                }
+                room.SetupRoom(w, h, mat);
+                rooms.Add(room);
             }
         }
     }

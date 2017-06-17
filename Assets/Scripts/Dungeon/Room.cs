@@ -71,7 +71,7 @@ namespace Dungeon
                 }
             }
 
-            // Easier to just use simpler loops and create 4 corners manually
+            // Easier to use simpler loops and create 4 corners manually
             walls.Add(CreateWall(0, 0).transform);
             walls.Add(CreateWall(0, height -1).transform);
             walls.Add(CreateWall(width -1, 0).transform);

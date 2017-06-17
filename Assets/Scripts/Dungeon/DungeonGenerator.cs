@@ -5,14 +5,14 @@ namespace Dungeon
 {
     public class DungeonGenerator : ProceduralGenerator
     {
-        [Range(5, 12)] public int minWidth;
-        [Range(12, 20)] public int maxWidth;
-        [Range(5, 12)] public int minHeight;
-        [Range(12, 20)] public int maxHeight;
+        [Range(30, 100)] public int mapRadius;
+        [Range(10, 18)] public int minWidth;
+        [Range(18, 30)] public int maxWidth;
+        [Range(10, 18)] public int minHeight;
+        [Range(18, 30)] public int maxHeight;
 
         public Transform dungeonParent;
 
-        public LayerMask wallMask, floorMask;
         public Material[] materials;
         public int totalRooms = 10;
         public List<Room> rooms = new List<Room>();
@@ -23,6 +23,13 @@ namespace Dungeon
         }
 
         public override void Generate()
+        {
+            CreateRooms();
+            PlaceRooms();
+            SeparateRooms();
+        }
+
+        private void CreateRooms()
         {
             for (int i = 0; i < totalRooms; i++)
             {
@@ -38,6 +45,21 @@ namespace Dungeon
                 room.SetupRoom(w, h, mat);
                 rooms.Add(room);
             }
+        }
+
+        public void PlaceRooms()
+        {
+            foreach (Room room in rooms)
+            {
+                var randomPoint = Random.insideUnitCircle * mapRadius;
+                if (room)
+                    room.transform.position = new Vector3(randomPoint.x, 0, randomPoint.y);
+            }
+        }
+
+        public void SeparateRooms()
+        {
+
         }
     }
 }

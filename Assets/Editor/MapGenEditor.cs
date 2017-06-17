@@ -14,7 +14,7 @@ public class MapGeneratorEditor : Editor
         {
             if (mapGen.autoUpdate)
             {
-                mapGen.GenerateMap();
+                mapGen.Generate();
             }
         }
 
@@ -22,10 +22,10 @@ public class MapGeneratorEditor : Editor
         {
             var rand = new System.Random();
             mapGen.seed = rand.Next();
-            mapGen.GenerateMap();
+            mapGen.Generate();
         }
         if (GUILayout.Button ("Generate")) {
-			mapGen.GenerateMap ();
+			mapGen.Generate();
 		}
     }
 }

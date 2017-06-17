@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MapGenerator : MonoBehaviour
+public class MapGenerator : ProceduralGenerator
 {
 
     public enum DrawMode { NoiseMap, ColourMap, MeshMap };
@@ -23,14 +23,11 @@ public class MapGenerator : MonoBehaviour
 
     public Vector2 offset;
     public AnimationCurve heightCurve;
-
-    public int seed;
-
-    public bool autoUpdate;
+    
 
     public TerrainType[] regions;
 
-    public void GenerateMap()
+    public override void Generate()
     {
 
         float[,] noiseMap = Noise.GenerateNoiseMap(mapChunkSize, mapChunkSize, seed, noiseScale, octaves, persistance, lacunarity, offset);

@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 namespace Dungeon
 {
-    class DungeonGenerator : MonoBehaviour
+    public class DungeonGenerator : ProceduralGenerator
     {
         [Range(5, 12)] public int minWidth;
         [Range(12, 20)] public int maxWidth;
@@ -15,10 +16,10 @@ namespace Dungeon
 
         private void Awake()
         {
-            GenerateDungeon();
+            Generate();
         }
 
-        private void GenerateDungeon()
+        public override void Generate()
         {
             for (int i = 0; i < totalRooms; i++)
             {

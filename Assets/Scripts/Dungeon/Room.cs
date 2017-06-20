@@ -7,6 +7,28 @@ namespace Dungeon
 
     public class Room : MonoBehaviour
     {
+#region Rect bounds
+        public float Top { 
+            get {
+                return transform.position.z + height;
+            }
+        }
+        public float Bottom { 
+            get {
+                return transform.position.z;
+            }
+        }
+        public float Left { 
+            get {
+                return transform.position.x;
+            }
+        }
+        public float Right { 
+            get {
+                return transform.position.x + width;
+            }
+        }
+#endregion
         // Always treat width as X and height as Y;
         public int width, height;
         private int floorWidth, floorHeight;
@@ -105,6 +127,13 @@ namespace Dungeon
             primitive.transform.position = new Vector3(x, 0, z);
             primitive.transform.SetParent(transform);
             return primitive;
+        }
+
+        public bool isOverlapping(Room _other){
+            
+            var topLeft = this.Left < _other.Right && this.Right > _other.Left;
+            var bottomRight = this.Top > _other.Bottom && this.Bottom < _other.Top;
+            return topLeft && bottomRight;
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Dungeon
         public Transform dungeonParent;
 
         public Material[] materials;
-        public int totalRooms = 10;
+        public int roomPlacementAttempts = 10;
         public List<Room> rooms = new List<Room>();
 
         private void Awake()
@@ -28,13 +28,13 @@ namespace Dungeon
         {
             RemoveChildren();
             CreateRooms();
-            PlaceRooms();
-            SeparateRooms();
+            //PlaceRooms();
+            //SeparateRooms();
         }
 
         private void CreateRooms()
         {
-            for (int i = 0; i < totalRooms; i++)
+            for (int i = 0; i < roomPlacementAttempts; i++)
             {
                 var parent = new GameObject();
                 parent.name = "Room " + i;
@@ -46,47 +46,38 @@ namespace Dungeon
 
                 var room = parent.AddComponent<Room>();
                 room.SetupRoom(w, h, mat);
+
+                // Place the room
+                room.PlaceRandomly(mapRadius);
+                // Is that space occupied somehow?
+                bool overlap = rooms.Any(r => room.IsOverlapping(r));
+                // If it is then lets destroy this room and move onto another
+                if (overlap)
+                {
+                    print("Failure");
+                    DestroyImmediate(room.gameObject);
+                    continue;
+                }
+                // Otherwise, save the room to the list.
                 rooms.Add(room);
             }
         }
 
-        public void PlaceRooms()
-        {
-            List<Room> placedRooms = new List<Room>();
 
-            foreach (Room room in rooms)
-            {
-                if (room == null)
-                    continue;
-
-                var randomPoint = Random.insideUnitCircle * mapRadius;
-                    var newPos = new Vector3(randomPoint.x, 0, randomPoint.y);
-                    bool overlap = placedRooms.Where(r => room.isOverlapping(r)).Any();
-                    
-                    if (overlap){
-                        DestroyImmediate(room.gameObject);
-                        Debug.Log("There was a failure!");
-                        continue;
-                    }
-                    placedRooms.Add(room);
-                    room.transform.position = newPos;
-                }
-            }
-        }
 
         /// Perform flocking separation, step by step using a coroutine
         public void SeparateRooms()
         {
             foreach (var room in rooms)
             {
-                if(room == null) { continue; }
+                if (room == null) { continue; }
 
                 var rb = room.gameObject.AddComponent<Rigidbody>();
                 var col = room.gameObject.AddComponent<BoxCollider>();
                 col.size = new Vector3(room.width, 1, room.height);
                 col.center = room.centre;
                 rb.constraints = RigidbodyConstraints.FreezeRotation & RigidbodyConstraints.FreezePositionY;
-                // rb.useGravity = false;
+                rb.useGravity = false;
             }
             // StartCoroutine(Separate());
         }
@@ -104,7 +95,7 @@ namespace Dungeon
         {
             for (int i = dungeonParent.childCount; i > 0; i--) // Safer to go back to front?
             {
-                var child = dungeonParent.GetChild(0); 
+                var child = dungeonParent.GetChild(0);
                 DestroyImmediate(child.gameObject);
             }
         }

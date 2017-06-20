@@ -129,8 +129,16 @@ namespace Dungeon
             return primitive;
         }
 
-        public bool isOverlapping(Room _other){
+
+        public void PlaceRandomly(float inRadius)
+        {
+            var randomPoint = Random.insideUnitCircle * inRadius;
+            transform.position = new Vector3((int)randomPoint.x, 0, (int)randomPoint.y);
+        }
+
+        public bool IsOverlapping(Room _other){
             
+            if(!_other) { return false; }
             var topLeft = this.Left < _other.Right && this.Right > _other.Left;
             var bottomRight = this.Top > _other.Bottom && this.Bottom < _other.Top;
             return topLeft && bottomRight;

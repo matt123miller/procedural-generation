@@ -132,10 +132,8 @@ namespace Dungeon
 
         public void PlaceRandomly(Vector2 inBounds)
         {
-            int randomX, randomY;
-
-            randomX = (int)Random.Range(0, inBounds.x - width);
-            randomY = (int)Random.Range(0, inBounds.y - height);
+            int randomX = (int)Random.Range(0, inBounds.x - width);
+            int randomY = (int)Random.Range(0, inBounds.y - height);
 
             transform.position = new Vector3(randomX, 0, randomY);
         }

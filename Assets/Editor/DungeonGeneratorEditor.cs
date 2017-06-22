@@ -15,7 +15,7 @@ public class DungeonGeneratorEditor : Editor
         {
             if (dungeonGen.autoUpdate)
             {
-                dungeonGen.CreateAllDungeon();
+                dungeonGen.Generate();
             }
         }
 
@@ -23,11 +23,11 @@ public class DungeonGeneratorEditor : Editor
         {
             var rand = new System.Random();
             dungeonGen.seed = rand.Next();
-            dungeonGen.CreateAllDungeon();
+            dungeonGen.Generate();
         }
         if (GUILayout.Button("Generate"))
         {
-            dungeonGen.CreateAllDungeon();
+            dungeonGen.Generate();
         }
     }
 }

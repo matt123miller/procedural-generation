@@ -16,16 +16,20 @@ namespace Dungeon
 
         public Material[] materials;
         public int roomPlacementAttempts = 10;
-        public List<Room> rooms = new List<Room>();
+        public Room[] rooms;
 
-        public void Generate(Vector2 dungeonSize)
+        public Room[] Generate(Vector2 dungeonSize)
         {
 			RemoveChildren();
+			rooms = new Room[roomPlacementAttempts];
 			CreateRooms(dungeonSize);
+			// TODO: Try and clear the remaining empty room spaces.
+			return rooms;
         }
 		
         private void CreateRooms(Vector2 dungeonSize)
         {
+			int successes = 0;
             for (int i = 0; i < roomPlacementAttempts; i++)
             {
                 var parent = new GameObject();
@@ -51,8 +55,10 @@ namespace Dungeon
                     continue;
                 }
                 // Otherwise, save the room to the list.
-                rooms.Add(room);
+                rooms[successes] = room;
+				successes++;
             }
+
         }
 
 

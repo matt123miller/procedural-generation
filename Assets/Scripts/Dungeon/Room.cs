@@ -130,10 +130,14 @@ namespace Dungeon
         }
 
 
-        public void PlaceRandomly(float inRadius)
+        public void PlaceRandomly(Vector2 inBounds)
         {
-            var randomPoint = Random.insideUnitCircle * inRadius;
-            transform.position = new Vector3((int)randomPoint.x, 0, (int)randomPoint.y);
+            int randomX, randomY;
+
+            randomX = (int)Random.Range(0, inBounds.x - width);
+            randomY = (int)Random.Range(0, inBounds.y - height);
+
+            transform.position = new Vector3(randomX, 0, randomY);
         }
 
         public bool IsOverlapping(Room _other){

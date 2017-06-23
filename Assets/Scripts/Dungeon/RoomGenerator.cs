@@ -44,7 +44,8 @@ namespace Dungeon
                 room.SetupRoom(w, h, mat);
 
                 // Place the room
-                room.PlaceRandomly(dungeonSize);
+                room.PlaceRandomly(dungeonSize, rooms);
+
                 // Is that space occupied somehow?
                 bool overlap = rooms.Any(r => room.IsOverlapping(r));
                 // If it is then lets destroy this room and move onto another

@@ -7,28 +7,36 @@ namespace Dungeon
 
     public class Room : MonoBehaviour
     {
-#region Rect bounds
-        public float Top { 
-            get {
+        #region Rect bounds
+        public float Top
+        {
+            get
+            {
                 return transform.position.z + height;
             }
         }
-        public float Bottom { 
-            get {
+        public float Bottom
+        {
+            get
+            {
                 return transform.position.z;
             }
         }
-        public float Left { 
-            get {
+        public float Left
+        {
+            get
+            {
                 return transform.position.x;
             }
         }
-        public float Right { 
-            get {
+        public float Right
+        {
+            get
+            {
                 return transform.position.x + width;
             }
         }
-#endregion
+        #endregion
         // Always treat width as X and height as Y;
         public int width, height;
         private int floorWidth, floorHeight;
@@ -95,9 +103,9 @@ namespace Dungeon
 
             // Easier to use simpler loops and create 4 corners manually
             walls.Add(CreateWall(0, 0).transform);
-            walls.Add(CreateWall(0, height -1).transform);
-            walls.Add(CreateWall(width -1, 0).transform);
-            walls.Add(CreateWall(width -1, height -1).transform);
+            walls.Add(CreateWall(0, height - 1).transform);
+            walls.Add(CreateWall(width - 1, 0).transform);
+            walls.Add(CreateWall(width - 1, height - 1).transform);
 
             return walls.ToArray();
         }
@@ -130,7 +138,7 @@ namespace Dungeon
         }
 
 
-        public void PlaceRandomly(Vector2 inBounds)
+        public void PlaceRandomly(Vector2 inBounds, Room[] prevRooms)
         {
             int randomX = (int)Random.Range(0, inBounds.x - width);
             int randomY = (int)Random.Range(0, inBounds.y - height);
@@ -138,9 +146,11 @@ namespace Dungeon
             transform.position = new Vector3(randomX, 0, randomY);
         }
 
-        public bool IsOverlapping(Room _other){
-            
-            if(!_other) { return false; }
+
+        public bool IsOverlapping(Room _other)
+        {
+
+            if (!_other) { return false; }
             var topLeft = this.Left < _other.Right && this.Right > _other.Left;
             var bottomRight = this.Top > _other.Bottom && this.Bottom < _other.Top;
             return topLeft && bottomRight;

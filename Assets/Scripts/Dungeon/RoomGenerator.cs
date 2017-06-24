@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 
 namespace Dungeon
@@ -12,18 +13,21 @@ namespace Dungeon
         [Range(18, 30)] public int maxWidth;
         [Range(10, 18)] public int minHeight;
         [Range(18, 30)] public int maxHeight;
+        private Vector2 dungeonSize;
         public Transform dungeonParent;
 
         public Material[] materials;
         public int roomPlacementAttempts = 10;
         public Room[] rooms;
 
-        public Room[] Generate(Vector2 dungeonSize)
+        public Room[] Generate(Vector2 _dungeonSize)
         {
 			RemoveChildren();
 			rooms = new Room[roomPlacementAttempts];
-			CreateRooms(dungeonSize);
+            dungeonSize = _dungeonSize;
+			CreateRooms(_dungeonSize);
 			// TODO: Try and clear the remaining empty room spaces.
+
 			return rooms;
         }
 		
@@ -33,7 +37,7 @@ namespace Dungeon
             for (int i = 0; i < roomPlacementAttempts; i++)
             {
                 var parent = new GameObject();
-                parent.name = "Room " + i;
+                parent.name = "Room " + successes;
                 parent.transform.SetParent(dungeonParent);
 
                 int w = Random.Range(minWidth, maxWidth);
@@ -44,7 +48,10 @@ namespace Dungeon
                 room.SetupRoom(w, h, mat);
 
                 // Place the room
-                room.PlaceRandomly(dungeonSize, rooms);
+                if (i == 0) // The first room should start at 0, makes certain things easier.
+                    room.transform.position = Vector3.zero;
+                else
+                    room.PlaceRandomly(dungeonSize);
 
                 // Is that space occupied somehow?
                 bool overlap = rooms.Any(r => room.IsOverlapping(r));
@@ -59,35 +66,20 @@ namespace Dungeon
                 rooms[successes] = room;
 				successes++;
             }
-
         }
 
-
-
-        /// Perform flocking separation, step by step using a coroutine
-        public void SeparateRooms()
+        public override string ToString()
         {
-            foreach (var room in rooms)
+            var sb = new StringBuilder();
+            sb.Append("There are " + rooms.Count() + " rooms");
+            for (int x = 0; x < dungeonSize.x; x++)
             {
-                if (room == null) { continue; }
+                for (int y = 0; y < dungeonSize.y; y++)
+                {
 
-                var rb = room.gameObject.AddComponent<Rigidbody>();
-                var col = room.gameObject.AddComponent<BoxCollider>();
-                col.size = new Vector3(room.width, 1, room.height);
-                col.center = room.centre;
-                rb.constraints = RigidbodyConstraints.FreezeRotation & RigidbodyConstraints.FreezePositionY;
-                rb.useGravity = false;
+                }
             }
-            // StartCoroutine(Separate());
-        }
-
-        IEnumerator Separate()
-        {
-            while (true)
-            {
-                Debug.Log("Hi");
-                yield return new WaitForFixedUpdate();
-            }
+            return sb.ToString();
         }
 
         private void RemoveChildren()

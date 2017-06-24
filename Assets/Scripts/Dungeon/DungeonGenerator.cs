@@ -2,9 +2,17 @@
 using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
+using System.Text;
 
 namespace Dungeon
 {
+    enum DungeonObjects
+    {
+        EMPTY = 0,
+        WALL = 1,
+        FLOOR = 2,
+        DOOR = 3
+    }
     public class DungeonGenerator : ProceduralGenerator
     {
         [Range(40, 60)] public int minWidth;
@@ -13,10 +21,11 @@ namespace Dungeon
         [Range(60, 120)] public int maxHeight;
 
         public Vector2 dungeonSize;
-        
-        public Transform[,] grid;
+
+        public int[,] grid;
 
         public RoomGenerator roomGen;
+        public CorridorGenerator corridorGen;
         private void Awake()
         {
             Generate();
@@ -27,9 +36,12 @@ namespace Dungeon
             GenerateDungeon();
 
             roomGen = GetComponent<RoomGenerator>();
+            corridorGen = GetComponent<CorridorGenerator>();
+
             var rooms = roomGen.Generate(dungeonSize);
 
             UpdateGridWithRooms(roomGen.rooms);
+            print(this.ToString());
         }
 
         private void GenerateDungeon()
@@ -37,7 +49,7 @@ namespace Dungeon
             int w = Random.Range(minWidth, maxWidth);
             int h = Random.Range(minHeight, maxHeight);
             dungeonSize = new Vector2(w, h);
-            grid = new Transform[w, h];
+            grid = new int[w, h];
         }
 
 
@@ -46,14 +58,34 @@ namespace Dungeon
             foreach (Room room in rooms)
             {
                 if (room == null) { continue; }
+                int rootX = (int)room.transform.position.x;
+                int rootY = (int)room.transform.position.y;
 
-                for (int i = 0; i < room.transform.childCount; i++)
+                for (int x = 0; x < room.width; x++)
                 {
-                    var child = room.transform.GetChild(i);
-
-                    grid[(int)child.transform.position.x, (int)child.transform.position.z] = child;
+                    for (int y = 0; y < room.height; y++)
+                    {
+                        bool edge = (x == 0 || y == 0 || x == room.width - 1 || y == room.height - 1);
+                      
+                        grid[rootX + x, rootY + y] = edge ? (int)DungeonObjects.WALL : (int)DungeonObjects.FLOOR;
+                    }
                 }
             }
+        }
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+
+            for (int y = 0; y < dungeonSize.y; y++)
+            {
+                for (int x = 0; x < dungeonSize.x; x++)
+                {
+                    sb.Append(grid[x, y]);
+                }
+                sb.Append("\n");
+            }
+            return sb.ToString();
         }
     }
 }

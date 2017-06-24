@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 namespace Dungeon
@@ -138,7 +139,7 @@ namespace Dungeon
         }
 
 
-        public void PlaceRandomly(Vector2 inBounds, Room[] prevRooms)
+        public void PlaceRandomly(Vector2 inBounds)
         {
             int randomX = (int)Random.Range(0, inBounds.x - width);
             int randomY = (int)Random.Range(0, inBounds.y - height);
@@ -149,11 +150,34 @@ namespace Dungeon
 
         public bool IsOverlapping(Room _other)
         {
-
             if (!_other) { return false; }
             var topLeft = this.Left < _other.Right && this.Right > _other.Left;
             var bottomRight = this.Top > _other.Bottom && this.Bottom < _other.Top;
             return topLeft && bottomRight;
         }
+
+        //public override string ToString()
+        //{
+        //    var sb = new StringBuilder();
+
+        //    for (int y = 0; y <= height; y++)
+        //    {
+        //        for (int x = 0; x <= width; x++)
+        //        {
+        //            if (y == 0 || y == height || x == 0 || x == width)
+        //            {
+        //                sb.Append("W");
+        //            }
+        //            else
+        //            {
+        //                sb.Append("F");
+        //            }
+
+        //            if (x == width)
+        //                sb.Append("\n");
+        //        }
+        //    }
+        //    return sb.ToString();
+        //}
     }
 }

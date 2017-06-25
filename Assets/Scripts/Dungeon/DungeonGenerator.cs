@@ -13,6 +13,7 @@ namespace Dungeon
         FLOOR = 2,
         DOOR = 3
     }
+
     public class DungeonGenerator : ProceduralGenerator
     {
         [Range(40, 60)] public int minWidth;
@@ -25,7 +26,9 @@ namespace Dungeon
         public int[,] grid;
 
         public RoomGenerator roomGen;
+        public GraphGenerator graphGen;
         public CorridorGenerator corridorGen;
+
         private void Awake()
         {
             Generate();
@@ -36,6 +39,7 @@ namespace Dungeon
             GenerateDungeon();
 
             roomGen = GetComponent<RoomGenerator>();
+            graphGen = GetComponent<GraphGenerator>();
             corridorGen = GetComponent<CorridorGenerator>();
 
             var rooms = roomGen.Generate(dungeonSize);

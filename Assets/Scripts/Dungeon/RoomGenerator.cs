@@ -18,12 +18,12 @@ namespace Dungeon
 
         public Material[] materials;
         public int roomPlacementAttempts = 10;
-        public Room[] rooms;
+        public List<Room> rooms;
 
-        public Room[] Generate(Vector2 _dungeonSize)
+        public List<Room> Generate(Vector2 _dungeonSize)
         {
 			RemoveChildren();
-			rooms = new Room[roomPlacementAttempts];
+			rooms = new List<Room>(roomPlacementAttempts);
             dungeonSize = _dungeonSize;
 			CreateRooms(_dungeonSize);
 			// TODO: Try and clear the remaining empty room spaces.
@@ -63,9 +63,11 @@ namespace Dungeon
                     continue;
                 }
                 // Otherwise, save the room to the list.
-                rooms[successes] = room;
+                rooms.Add(room);
 				successes++;
             }
+
+            rooms = rooms.Where(r => r != null).ToList();
         }
 
         public override string ToString()

@@ -41,7 +41,7 @@ namespace Dungeon
             var rooms = roomGen.Generate(dungeonSize);
 
             UpdateGridWithRooms(roomGen.rooms);
-            print(this.ToString());
+            print(this);
         }
 
         private void GenerateDungeon()
@@ -53,14 +53,14 @@ namespace Dungeon
         }
 
 
-        private void UpdateGridWithRooms(Room[] rooms)
+        private void UpdateGridWithRooms(List<Room> rooms)
         {
             foreach (Room room in rooms)
             {
                 if (room == null) { continue; }
                 int rootX = (int)room.transform.position.x;
-                int rootY = (int)room.transform.position.y;
-
+                int rootY = (int)room.transform.position.z;
+                
                 for (int x = 0; x < room.width; x++)
                 {
                     for (int y = 0; y < room.height; y++)
@@ -76,8 +76,11 @@ namespace Dungeon
         public override string ToString()
         {
             var sb = new StringBuilder();
+            sb.Append("This dungeon:\n");
+            sb.Append("Has " + roomGen.rooms.Count() + " Rooms\n");
+            sb.Append("Has the bounds " + dungeonSize + "\n");
 
-            for (int y = 0; y < dungeonSize.y; y++)
+            for (int y = (int)dungeonSize.y - 1; y >= 0; y--)
             {
                 for (int x = 0; x < dungeonSize.x; x++)
                 {

@@ -8,9 +8,12 @@ namespace Dungeon
     {
         public List<Room> rooms;
         
-        public void Generate(List<Room> _rooms)
+        public Transform Generate(List<Room> _rooms)
         {
             rooms = _rooms;
+
+            // DEFINITELY CHANGE LATER, RETURN THE GRAPH
+            return transform;
         }
     }
 }

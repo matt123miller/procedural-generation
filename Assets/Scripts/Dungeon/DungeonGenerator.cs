@@ -28,9 +28,15 @@ namespace Dungeon
         public RoomGenerator roomGen;
         public GraphGenerator graphGen;
         public CorridorGenerator corridorGen;
+        public SpawnPlayer spawnPlayer;
 
         private void Awake()
         {
+            roomGen = GetComponent<RoomGenerator>();
+            graphGen = GetComponent<GraphGenerator>();
+            corridorGen = GetComponent<CorridorGenerator>();
+            spawnPlayer = GetComponent<SpawnPlayer>();
+
             Generate();
         }
 
@@ -38,13 +44,13 @@ namespace Dungeon
         {
             GenerateDungeon();
 
-            roomGen = GetComponent<RoomGenerator>();
-            graphGen = GetComponent<GraphGenerator>();
-            corridorGen = GetComponent<CorridorGenerator>();
 
             var rooms = roomGen.Generate(dungeonSize);
-
             UpdateGridWithRooms(roomGen.rooms);
+            var graph = graphGen.Generate(rooms);
+            corridorGen.Generate(rooms); // Will also accept the generated graph 
+            spawnPlayer.Spawn(rooms.First());
+
             print(this);
         }
 

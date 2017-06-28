@@ -46,6 +46,7 @@ namespace Dungeon
 
 
             var rooms = roomGen.Generate(dungeonSize);
+            // Chane dungeon size to be smallest size that fits all rooms.
             UpdateGridWithRooms(roomGen.rooms);
             var graph = graphGen.Generate(rooms);
             corridorGen.Generate(rooms); // Will also accept the generated graph 

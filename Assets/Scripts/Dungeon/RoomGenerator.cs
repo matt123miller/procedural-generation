@@ -22,18 +22,18 @@ namespace Dungeon
 
         public List<Room> Generate(Vector2 _dungeonSize)
         {
-			RemoveChildren();
-			rooms = new List<Room>();
+            RemoveChildren();
+            rooms = new List<Room>();
             dungeonSize = _dungeonSize;
-			CreateRooms(_dungeonSize);
-			// TODO: Try and clear the remaining empty room spaces.
+            CreateRooms(_dungeonSize);
+            // TODO: Try and clear the remaining empty room spaces.
 
-			return rooms;
+            return rooms;
         }
-		
+
         private void CreateRooms(Vector2 dungeonSize)
         {
-			int successes = 0;
+            int successes = 0;
             for (int i = 0; i < roomPlacementAttempts; i++)
             {
                 var parent = new GameObject();
@@ -48,23 +48,42 @@ namespace Dungeon
                 room.SetupRoom(w, h, mat);
 
                 // Place the room
-                if (i == 0) // The first room should start at 0, makes certain things easier.
+                if (i == 0)
+                { // The first room should start at 0, makes certain things easier.
                     room.transform.position = Vector3.zero;
+                }
                 else
-                    room.PlaceRandomly(dungeonSize);
+                {
+                    // Pick a side of the previous room.
+                    Room prevRoom = rooms[rooms.Count() - 1];
+                    Vector3[] sides = { prevRoom.Centre.plusZ(prevRoom.Top/2), prevRoom.Centre.plusX(prevRoom.Right/2),
+                                        prevRoom.Centre.plusZ(-prevRoom.Bottom/2), prevRoom.Centre.plusX(-prevRoom.Left/2) };
+
+                    int edgeIndex = Random.Range(0, sides.Length);
+                    Vector3 edge = sides[edgeIndex];
+
+                    // What goes here? If we're moving left or down (negative numbers) then how does that change things?
+                    // Maybe it should be < 1 as positive changes actually require a weird offset. 
+                    var offset = edgeIndex > 1 ? 0 : 0;
+
+                    //room.Centre = edge + new Vector3(room.width / 2, 0, room.height / 2);
+                    room.SetPosition(prevRoom.transform.position.plusX(prevRoom.width));
+                }
 
                 // Is that space occupied somehow?
-                bool overlap = rooms.Any(r => room.IsOverlapping(r));
+                //bool overlap = rooms.Any(r => room.IsOverlapping(r));
+
                 // If it is then lets destroy this room and move onto another
-                if (overlap)
-                {
-                    print("Failure");
-                    DestroyImmediate(room.gameObject);
-                    continue;
-                }
+                //if (overlap)
+                //{
+                //    print("Failure");
+                //    DestroyImmediate(room.gameObject);
+                //    continue;
+                //}
+
                 // Otherwise, save the room to the list.
                 rooms.Add(room);
-				successes++;
+                successes++;
             }
 
             // No longer needed

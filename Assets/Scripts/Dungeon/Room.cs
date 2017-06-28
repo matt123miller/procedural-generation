@@ -8,7 +8,7 @@ namespace Dungeon
 
     public class Room : MonoBehaviour
     {
-        #region Rect bounds
+        #region Rect bounds and manipulation
         public float Top
         {
             get
@@ -37,11 +37,30 @@ namespace Dungeon
                 return transform.position.x + width;
             }
         }
+        public Vector3 Centre
+        {
+            get
+            {
+                return _centre;
+            }
+            set 
+            {
+                _centre = value;
+                transform.position = new Vector3((int)(value.x - width / 2), 0, (int)(value.z - width / 2));
+            }
+        }
+        public void SetPosition(Vector3 newPos)
+        {
+            transform.position = newPos;
+            _centre = new Vector3(newPos.x + width / 2, 0, newPos.z + width / 2);
+        }
+
         #endregion
         // Always treat width as X and height as Y;
         public int width, height;
         private int floorWidth, floorHeight;
-        public Vector3 centre;
+        [SerializeField]
+        private Vector3 _centre;
         private Material material;
         public Transform[,] tiles;
         public Transform[] walls;
@@ -53,7 +72,7 @@ namespace Dungeon
             height = _height;
             floorWidth = _width - 2;
             floorHeight = _height - 2;
-            centre = new Vector3(width / 2, 0, height / 2);
+            _centre = new Vector3(width / 2, 0, height / 2);
             material = _material;
 
             tiles = GenerateTiles();

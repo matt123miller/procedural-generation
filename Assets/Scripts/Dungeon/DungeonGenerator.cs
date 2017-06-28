@@ -49,7 +49,7 @@ namespace Dungeon
             UpdateGridWithRooms(roomGen.rooms);
             var graph = graphGen.Generate(rooms);
             corridorGen.Generate(rooms); // Will also accept the generated graph 
-            spawnPlayer.Spawn(rooms.First());
+            //spawnPlayer.Spawn(rooms.First());
 
             print(this);
         }

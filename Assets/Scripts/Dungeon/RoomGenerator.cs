@@ -23,7 +23,7 @@ namespace Dungeon
         public List<Room> Generate(Vector2 _dungeonSize)
         {
 			RemoveChildren();
-			rooms = new List<Room>(roomPlacementAttempts);
+			rooms = new List<Room>();
             dungeonSize = _dungeonSize;
 			CreateRooms(_dungeonSize);
 			// TODO: Try and clear the remaining empty room spaces.
@@ -67,7 +67,11 @@ namespace Dungeon
 				successes++;
             }
 
-            rooms = rooms.Where(r => r != null).ToList();
+            // No longer needed
+            //print(rooms.Count());
+            //rooms = rooms.Where(r => r != null).ToList();
+            //print(rooms.Count());
+
         }
 
         public override string ToString()

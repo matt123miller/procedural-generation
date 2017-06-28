@@ -9,11 +9,11 @@ public class GraphDisplayEditor : Editor {
 
     void OnSceneGUI()
     {
-        GraphGenerator graph = (GraphGenerator)target;
-        if (graph.rooms == null) { return; }
-        Handles.color = Color.white;
+        //GraphGenerator graph = (GraphGenerator)target;
+        //if (graph.rooms == null) { return; }
+        //Handles.color = Color.white;
 
-        Handles.DrawWireArc(graph.transform.position, Vector3.up, Vector3.forward, 360, 20);
+        //Handles.DrawWireArc(graph.transform.position, Vector3.up, Vector3.forward, 360, 20);
 
     }
 }

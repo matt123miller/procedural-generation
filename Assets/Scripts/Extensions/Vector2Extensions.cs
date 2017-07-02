@@ -3,27 +3,27 @@ using System.Collections;
 
 public static class Vector2Extensions {
 
-    public static Vector2 withX(this Vector2 vector, float x) {
+    public static Vector2 WithX(this Vector2 vector, float x) {
         return new Vector2(x, vector.y);
     }
 
-    public static Vector2 withY(this Vector2 vector, float y) {
+    public static Vector2 WithY(this Vector2 vector, float y) {
         return new Vector2(vector.x, y);
     }
 
-    public static Vector2 plusX(this Vector2 vector, float plusX) {
+    public static Vector2 PlusX(this Vector2 vector, float plusX) {
         return new Vector2(vector.x + plusX, vector.y);
     }
 
-    public static Vector2 plusY(this Vector2 vector, float plusY) {
+    public static Vector2 PlusY(this Vector2 vector, float plusY) {
         return new Vector2(vector.x, vector.y + plusY);
     }
 
-    public static Vector2 timesX(this Vector2 vector, float timesX) {
+    public static Vector2 TimesX(this Vector2 vector, float timesX) {
         return new Vector2(vector.x * timesX, vector.y);
     }
 
-    public static Vector2 timesY(this Vector2 vector, float timesY) {
+    public static Vector2 TimesY(this Vector2 vector, float timesY) {
         return new Vector2(vector.x, vector.y * timesY);
     }
 

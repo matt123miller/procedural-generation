@@ -34,9 +34,9 @@ namespace Dungeon
         private void CreateRooms(Vector2 dungeonSize)
         {
             int successes = 0;
-            Vector3[] directions = new Vector3[] { new Vector3(1, 0, 0), new Vector3(0, 0, 1),
-                                                           new Vector3(-1, 0, 0), new Vector3(0, 0, -1) };
+            Vector3[] directions = new Vector3[] { Vector3.forward, Vector3.right, Vector3.back, Vector3.left };
             directions.ForEach(d => print(d));
+
             for (int i = 0; i < roomPlacementAttempts; i++)
             {
                 var parent = new GameObject();

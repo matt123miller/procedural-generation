@@ -46,11 +46,12 @@ namespace Dungeon
 
 
             var rooms = roomGen.Generate(dungeonSize);
-            // Chane dungeon size to be smallest size that fits all rooms.
-            //UpdateGridWithRooms(roomGen.rooms);
+            // Change dungeon size to be smallest size that fits all rooms.
             var graph = graphGen.Generate(rooms);
             corridorGen.Generate(rooms); // Will also accept the generated graph 
-            spawnPlayer.Spawn(rooms.First());
+            ResizeDungeon(rooms);
+            //UpdateGridWithRooms(roomGen.rooms);
+            //spawnPlayer.Spawn(rooms.First());
 
             //print(this);
         }
@@ -63,6 +64,15 @@ namespace Dungeon
             grid = new int[w, h];
         }
 
+        private void ResizeDungeon(List<Room> rooms)
+        {
+            var maxWidth = rooms.Max(r => r.transform.position.x);
+            var maxHeight = rooms.Max(r => r.transform.position.z);
+
+            print(maxHeight);
+            print(maxWidth);
+
+        }
 
         private void UpdateGridWithRooms(List<Room> rooms)
         {

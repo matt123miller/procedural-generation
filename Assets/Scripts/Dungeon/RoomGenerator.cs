@@ -34,6 +34,9 @@ namespace Dungeon
         private void CreateRooms(Vector2 dungeonSize)
         {
             int successes = 0;
+            Vector3[] directions = new Vector3[] { new Vector3(1, 0, 0), new Vector3(0, 0, 1),
+                                                           new Vector3(-1, 0, 0), new Vector3(0, 0, -1) };
+            directions.ForEach(d => print(d));
             for (int i = 0; i < roomPlacementAttempts; i++)
             {
                 var parent = new GameObject();
@@ -56,30 +59,39 @@ namespace Dungeon
                 {
                     // Pick a side of the previous room.
                     Room prevRoom = rooms[rooms.Count() - 1];
-                    Vector3[] sides = { prevRoom.Centre.plusZ(prevRoom.Top/2), prevRoom.Centre.plusX(prevRoom.Right/2),
-                                        prevRoom.Centre.plusZ(-prevRoom.Bottom/2), prevRoom.Centre.plusX(-prevRoom.Left/2) };
+                    Vector3 target;
 
-                    int edgeIndex = Random.Range(0, sides.Length);
-                    Vector3 edge = sides[edgeIndex];
+                    // Conditionals are life.
+                    int dx = Random.Range(0, 2) == 1 ? 1 : -1;
+                    int dy = Random.Range(0, 2) == 1 ? 1 : -1;
+
+                    Vector3 direction = directions.random();
+
+                    print("Direction " + i + " is :" + direction);
+
+                    // Need to offset when going left or down, e.g. offset by prevRoom - room
+                    int widthOffset = direction.x == -1 ? (prevRoom.width - room.width) : 0;
+                    int heightOffset = direction.z == -1 ? (prevRoom.height - room.height) : 0;
+
+                    target = prevRoom.transform.position + new Vector3(prevRoom.width * direction.x + widthOffset, 0, prevRoom.height * direction.z + heightOffset);
 
                     // What goes here? If we're moving left or down (negative numbers) then how does that change things?
                     // Maybe it should be < 1 as positive changes actually require a weird offset. 
-                    var offset = edgeIndex > 1 ? 0 : 0;
+                    Vector3 offset = new Vector3(Random.Range(-direction.x / 2, direction.x / 2), 0, Random.Range(-direction.z / 1, direction.z / 2));
 
-                    //room.Centre = edge + new Vector3(room.width / 2, 0, room.height / 2);
-                    room.SetPosition(prevRoom.transform.position.plusX(prevRoom.width));
+                    room.transform.position = target;
                 }
 
                 // Is that space occupied somehow?
-                //bool overlap = rooms.Any(r => room.IsOverlapping(r));
+                bool overlap = rooms.Any(r => room.IsOverlapping(r));
 
                 // If it is then lets destroy this room and move onto another
-                //if (overlap)
-                //{
-                //    print("Failure");
-                //    DestroyImmediate(room.gameObject);
-                //    continue;
-                //}
+                if (overlap)
+                {
+                    print("Failure");
+                    DestroyImmediate(room.gameObject);
+                    continue;
+                }
 
                 // Otherwise, save the room to the list.
                 rooms.Add(room);

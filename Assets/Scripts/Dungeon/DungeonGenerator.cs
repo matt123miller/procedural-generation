@@ -42,6 +42,8 @@ namespace Dungeon
 
         public override void Generate()
         {
+            Random.InitState(seed);
+
             GenerateDungeon();
 
 

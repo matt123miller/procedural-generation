@@ -65,6 +65,7 @@ namespace Dungeon
         public Transform[,] tiles;
         public Transform[] walls;
 
+        public List<Room> neighbours;
 
         public void SetupRoom(int _width, int _height, Material _material)
         {
@@ -74,7 +75,8 @@ namespace Dungeon
             floorHeight = _height - 2;
             _centre = new Vector3(width / 2, 0, height / 2);
             material = _material;
-
+            neighbours = new List<Room>();
+            
             tiles = GenerateTiles();
             walls = GenerateWalls();
         }

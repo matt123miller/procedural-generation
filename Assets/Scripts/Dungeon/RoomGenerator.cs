@@ -65,6 +65,7 @@ namespace Dungeon
                     int dx = Random.Range(0, 2) == 1 ? 1 : -1;
                     int dy = Random.Range(0, 2) == 1 ? 1 : -1;
 
+                    // Pick a direction, north south east or west
                     Vector3 direction = directions.random();
 
                     print("Direction " + i + " is :" + direction);
@@ -72,12 +73,18 @@ namespace Dungeon
                     // Need to offset when going left or down, e.g. offset by prevRoom - room
                     int widthOffset = direction.x == -1 ? (prevRoom.width - room.width) : 0;
                     int heightOffset = direction.z == -1 ? (prevRoom.height - room.height) : 0;
-
-                    target = prevRoom.transform.position + new Vector3(prevRoom.width * direction.x + widthOffset, 0, prevRoom.height * direction.z + heightOffset);
+                    var edgeOffset = new Vector3(prevRoom.width * direction.x + widthOffset, 0, prevRoom.height * direction.z + heightOffset);
 
                     // What goes here? If we're moving left or down (negative numbers) then how does that change things?
                     // Maybe it should be < 1 as positive changes actually require a weird offset. 
-                    Vector3 offset = new Vector3(Random.Range(-direction.x / 2, direction.x / 2), 0, Random.Range(-direction.z / 1, direction.z / 2));
+                    int vx = Random.Range(1, room.floorWidth / 2 );
+                    int vz = Random.Range(1, room.floorHeight / 2 );
+                    // Flipping the direction z and x multiplication here neatly allows me to switch from moving towards an edge to moving along it
+                    // It's just easy to miss so watch out for that.
+                    Vector3 variationOffset = new Vector3(vx * direction.z, 0, vz * direction.x);
+
+                    target = prevRoom.transform.position + edgeOffset + variationOffset;
+
 
                     room.transform.position = target;
                 }

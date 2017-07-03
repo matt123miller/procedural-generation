@@ -58,7 +58,7 @@ namespace Dungeon
         #endregion
         // Always treat width as X and height as Y;
         public int width, height;
-        private int floorWidth, floorHeight;
+        public int floorWidth, floorHeight;
         [SerializeField]
         private Vector3 _centre;
         private Material material;

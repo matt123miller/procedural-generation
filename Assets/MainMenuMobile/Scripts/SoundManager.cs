@@ -89,14 +89,14 @@ public class SoundManager : MonoBehaviour {
 
     public void ChangeMusicVol()
     {
-        if (MusicOn)
-        {
-            musicAudioChannel.audioMixer.SetFloat("MUSIC", 0.0f);
-        }
-        else
-        {
-            musicAudioChannel.audioMixer.SetFloat("MUSIC", -80.0f);
-        }
+        // if (MusicOn)
+        // {
+        //     musicAudioChannel.audioMixer.SetFloat("MUSIC", 0.0f);
+        // }
+        // else
+        // {
+        //     musicAudioChannel.audioMixer.SetFloat("MUSIC", -80.0f);
+        // }
     }
 
     public void ToggleSFX()

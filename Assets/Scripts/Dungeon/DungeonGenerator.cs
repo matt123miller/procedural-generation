@@ -96,6 +96,19 @@ namespace Dungeon
             }
         }
 
+        public void SetSeed(int _seed){
+
+            Debug.Log("seed set to " + seed);
+            seed = _seed;
+        }
+
+        public int RandomiseSeed(){
+
+            var rand = new System.Random();
+            seed = rand.Next();
+            return seed;
+        }
+
         public override string ToString()
         {
             var sb = new StringBuilder();
@@ -112,6 +125,6 @@ namespace Dungeon
                 sb.Append("\n");
             }
             return sb.ToString();
-        }
+        }   
     }
 }

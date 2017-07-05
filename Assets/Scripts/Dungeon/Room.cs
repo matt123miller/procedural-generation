@@ -67,7 +67,7 @@ namespace Dungeon
 
         public List<Room> neighbours;
 
-        public void SetupRoom(int _width, int _height, Material _material)
+        public virtual void SetupRoom(int _width, int _height, Material _material)
         {
             width = _width;
             height = _height;

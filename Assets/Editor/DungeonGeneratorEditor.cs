@@ -35,9 +35,7 @@ public class DungeonGeneratorEditor : Editor
 
         if (GUILayout.Button("Randomise Seed"))
         {
-            var rand = new System.Random();
-            dungeonGen.seed = rand.Next();
-            dungeonGen.Generate();
+            dungeonGen.RandomiseSeed();
         }
         if (GUILayout.Button("Generate"))
         {

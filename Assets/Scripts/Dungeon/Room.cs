@@ -43,7 +43,7 @@ namespace Dungeon
             {
                 return _centre;
             }
-            set 
+            set
             {
                 _centre = value;
                 transform.position = new Vector3((int)(value.x - width / 2), 0, (int)(value.z - width / 2));
@@ -65,7 +65,7 @@ namespace Dungeon
         public Transform[,] tiles;
         public Transform[] walls;
 
-        public List<Room> neighbours;
+        public Dictionary<Vector3, Room> neighbours;
 
         public virtual void SetupRoom(int _width, int _height, Material _material)
         {
@@ -75,8 +75,8 @@ namespace Dungeon
             floorHeight = _height - 2;
             _centre = new Vector3(width / 2, 0, height / 2);
             material = _material;
-            neighbours = new List<Room>();
-            
+            neighbours = new Dictionary<Vector3, Room>();
+
             tiles = GenerateTiles();
             walls = GenerateWalls();
         }
@@ -169,11 +169,22 @@ namespace Dungeon
         }
 
 
-        public bool IsOverlapping(Room _other)
+        public bool IsOverlapping(Room _other, bool _floorDimensions)
         {
             if (!_other) { return false; }
-            var topLeft = this.Left < _other.Right && this.Right > _other.Left;
-            var bottomRight = this.Top > _other.Bottom && this.Bottom < _other.Top;
+            bool topLeft = false;
+            bool bottomRight = false;
+
+            if (_floorDimensions)
+            {
+                topLeft = this.Left - 2 < _other.Right - 2 && this.Right - 2 > _other.Left - 2;
+                bottomRight = this.Top - 2 > _other.Bottom - 2 && this.Bottom - 2 < _other.Top - 2;
+            }
+            else
+            {
+                topLeft = this.Left < _other.Right && this.Right > _other.Left;
+                bottomRight = this.Top > _other.Bottom && this.Bottom < _other.Top;
+            }
             return topLeft && bottomRight;
         }
 

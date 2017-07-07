@@ -11,8 +11,7 @@ public static class TransformExtensions
         }
 
     }
-
-
+    
     public static void AddChildren(this Transform parent, Transform[] children)
     {
         for (int i = 0; i < children.Length; i++)

@@ -47,7 +47,7 @@ namespace Dungeon
             GenerateDungeon();
 
 
-            var rooms = roomGen.Generate(dungeonSize);
+            var rooms = roomGen.Generate(dungeonSize, seed);
             // Change dungeon size to be smallest size that fits all rooms.
             var graph = graphGen.Generate(rooms);
             corridorGen.Generate(rooms); // Will also accept the generated graph 

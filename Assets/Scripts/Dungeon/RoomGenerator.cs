@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+//using Random = System.Random;
 
 namespace Dungeon
 {
     public class RoomGenerator : MonoBehaviour
     {
-
+        private int seed;
         [Range(10, 18)] public int minWidth;
         [Range(18, 30)] public int maxWidth;
         [Range(10, 18)] public int minHeight;
@@ -16,19 +17,22 @@ namespace Dungeon
         private Vector2 dungeonSize;
         public Transform dungeonParent;
         [Range(0, 5)] public int optionalRoomLoopbacks = 0;
+        [Range(0, 20)] public int corridorChance = 5;
         public int roomPlacementAttempts = 10;
         public Material[] materials;
         private Vector3[] directions = new Vector3[] { Vector3.forward, Vector3.right, Vector3.back, Vector3.left };
 
         public List<Room> rooms;
 
-        public List<Room> Generate(Vector2 _dungeonSize)
+        public List<Room> Generate(Vector2 _dungeonSize, int _seed)
         {
             RemoveChildren();
+            seed = _seed;
+            Random.InitState(seed);
+
             rooms = new List<Room>();
             dungeonSize = _dungeonSize;
             CreateRooms(_dungeonSize);
-            // TODO: Try and clear the remaining empty room spaces.
 
             return rooms;
         }
@@ -36,9 +40,7 @@ namespace Dungeon
         private void CreateRooms(Vector2 dungeonSize)
         {
             int successes = 0;
-
-            directions.ForEach(d => print(d));
-
+            
             for (int i = 0; i < roomPlacementAttempts; i++)
             {
                 var parent = new GameObject();
@@ -48,8 +50,10 @@ namespace Dungeon
                 int w = Random.Range(minWidth, maxWidth);
                 int h = Random.Range(minHeight, maxHeight);
                 var mat = materials[Random.Range(0, materials.Length)];
-
-                var room = parent.AddComponent<Room>();
+                
+                Room room = Random.Range(0, 100) > corridorChance ?
+                                                    parent.AddComponent<Room>() :
+                                                    parent.AddComponent<Corridor>();
                 room.SetupRoom(w, h, mat);
 
                 // Where to place the room?
@@ -63,21 +67,21 @@ namespace Dungeon
                 }
 
                 int prevIndexMod = successes - 1;
-                // Should we loop back to a previous room and try to place from there?
                 // This will be reused later
-                bool loopback = optionalRoomLoopbacks != 0 && successes % optionalRoomLoopbacks == 0;
+                bool loopback = optionalRoomLoopbacks != 0 && (successes % optionalRoomLoopbacks + 2) == 0;
                 if (loopback)
                 {
+                    // Should we loop back to a previous room and try to place from there?
                     prevIndexMod = successes - Random.Range(1, optionalRoomLoopbacks + 1);
                 }
 
                 Room prevRoom = rooms[prevIndexMod];
+                Vector3 direction = new Vector3();
 
-                room.transform.position = PlaceRoom(room, prevRoom); ;
-
+                room.transform.position = PlaceRoom(room, prevRoom, out direction);
 
                 // Is that space occupied somehow?
-                bool overlap = rooms.Any(r => room.IsOverlapping(r));
+                bool overlap = rooms.Any(r => room.IsOverlapping(r, true));
 
                 // If it is then lets destroy this room and move onto another
                 if (overlap)
@@ -90,16 +94,15 @@ namespace Dungeon
                 // Otherwise, save the room to the list.
                 rooms.Add(room);
                 successes++;
+
+                // Assign the room neighbours
+                prevRoom.neighbours[direction] = room;
+                var newDir = Vector3.Reflect(direction, direction);
+                room.neighbours[newDir] = prevRoom;
             }
-
-            // No longer needed
-            //print(rooms.Count());
-            //rooms = rooms.Where(r => r != null).ToList();
-            //print(rooms.Count());
-
         }
 
-        private Vector3 PlaceRoom(Room room, Room prevRoom)
+        private Vector3 PlaceRoom(Room room, Room prevRoom, out Vector3 direction)
         {
             Vector3 target;
             // Conditionals are life.
@@ -107,7 +110,10 @@ namespace Dungeon
             int dy = Random.Range(0, 2) == 1 ? 1 : -1;
 
             // Pick a direction, north south east or west
-            Vector3 direction = directions.random();
+            direction = directions.random();
+
+            // Maybe check first to see if this direction is already used for that room?
+
 
             // Need to offset when going left or down, e.g. offset by prevRoom - room
             int widthOffset = direction.x == -1 ? (prevRoom.width - room.width) : 0;
@@ -115,8 +121,8 @@ namespace Dungeon
             var edgeOffset = new Vector3(prevRoom.width * direction.x + widthOffset, 0, prevRoom.height * direction.z + heightOffset);
 
             // Make some random offest along the chosen edge, makes it look less square.
-            int vx = Random.Range(1, room.floorWidth / 2);
-            int vz = Random.Range(1, room.floorHeight / 2);
+            int vx = Random.Range(1, prevRoom.floorWidth / 2);
+            int vz = Random.Range(1, prevRoom.floorHeight / 2);
             // Flipping the direction z and x multiplication here neatly allows me to switch from moving towards an edge to moving along it
             // It's just easy to miss so watch out for that.
             var variationOffset = new Vector3(vx * direction.z, 0, vz * direction.x);

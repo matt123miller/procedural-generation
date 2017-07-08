@@ -44,6 +44,9 @@ namespace Dungeon
         {
             Random.InitState(seed);
 
+            print(Random.Range(0, 100));
+
+
             GenerateDungeon();
 
 
@@ -71,9 +74,8 @@ namespace Dungeon
             var maxWidth = rooms.Max(r => r.transform.position.x);
             var maxHeight = rooms.Max(r => r.transform.position.z);
 
-            print(maxHeight);
-            print(maxWidth);
-
+            //print(maxHeight);
+            //print(maxWidth);
         }
 
         private void UpdateGridWithRooms(List<Room> rooms)

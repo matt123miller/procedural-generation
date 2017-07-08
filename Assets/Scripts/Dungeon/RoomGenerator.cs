@@ -28,7 +28,9 @@ namespace Dungeon
         {
             RemoveChildren();
             seed = _seed;
-            Random.InitState(seed);
+            //Random.InitState(seed);
+
+            print(Random.Range(0, 100));
 
             rooms = new List<Room>();
             dungeonSize = _dungeonSize;
@@ -100,6 +102,14 @@ namespace Dungeon
                 var newDir = Vector3.Reflect(direction, direction);
                 room.neighbours[newDir] = prevRoom;
             }
+
+            //foreach (Room r in rooms)
+            //{
+            //    foreach(var key in r.neighbours.Keys)
+            //    {
+            //        print(string.Format("{0} has neighbour {1} in direction {2}", r.name, r.neighbours[key].name, key));
+            //    }
+            //}
         }
 
         private Vector3 PlaceRoom(Room room, Room prevRoom, out Vector3 direction)
@@ -112,7 +122,8 @@ namespace Dungeon
             // Pick a direction, north south east or west
             direction = directions.random();
 
-            // Maybe check first to see if this direction is already used for that room?
+            // TODO: Maybe check first to see if this direction is already used for that room?
+
 
 
             // Need to offset when going left or down, e.g. offset by prevRoom - room

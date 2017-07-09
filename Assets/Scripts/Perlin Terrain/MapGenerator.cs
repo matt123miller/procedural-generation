@@ -29,8 +29,8 @@ public class MapGenerator : ProceduralGenerator
 
     public void Awake()
     {
-        AsyncSceneTransition.ScreenFade.fadedOut += RandomiseSeed;
-        AsyncSceneTransition.ScreenFade.fadedOut += Generate;
+        AsyncSceneTransition.ScreenFade.fadeOutFinished += RandomiseSeed;
+        AsyncSceneTransition.ScreenFade.fadeOutFinished += Generate;
     }
 
     public override void Generate()

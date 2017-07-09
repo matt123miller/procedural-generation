@@ -23,7 +23,7 @@ public class DetailEditController : MonoBehaviour
         detailPanel = transform.Find("Details Panel");
         detailPanel.gameObject.SetActive(false);
 
-        AsyncSceneTransition.ScreenFade.fadedOut += EnableDetails;
+        AsyncSceneTransition.ScreenFade.fadeOutFinished += EnableDetails;
     }
 
     void EnableDetails()

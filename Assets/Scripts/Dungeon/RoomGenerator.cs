@@ -13,6 +13,7 @@ namespace Dungeon
         [Range(18, 30)] public int maxWidth;
         [Range(10, 18)] public int minHeight;
         [Range(18, 30)] public int maxHeight;
+        public bool stepThrough = true;
         private Vector2 dungeonSize;
         public Transform dungeonParent;
         [Range(0, 5)] public int optionalRoomLoopbacks = 0;
@@ -29,15 +30,17 @@ namespace Dungeon
 
             rooms = new List<Room>();
             dungeonSize = _dungeonSize;
-            CreateRooms(_dungeonSize);
+
+            //var createRoomsRoutine = CreateRooms(dungeonSize);
+            StartCoroutine(CreateRooms(dungeonSize));
 
             return rooms;
         }
 
-        private void CreateRooms(Vector2 dungeonSize)
+        private IEnumerator CreateRooms(Vector2 dungeonSize)
         {
             int successes = 0;
-            
+
             for (int i = 0; i < roomPlacementAttempts; i++)
             {
                 var parent = new GameObject();
@@ -47,7 +50,7 @@ namespace Dungeon
                 int w = Random.Range(minWidth, maxWidth);
                 int h = Random.Range(minHeight, maxHeight);
                 var mat = materials[Random.Range(0, materials.Length)];
-                
+
                 Room room = Random.Range(0, 100) > corridorChance ?
                                                     parent.AddComponent<Room>() :
                                                     parent.AddComponent<Corridor>();
@@ -86,6 +89,10 @@ namespace Dungeon
                 if (overlap)
                 {
                     print("Failure");
+                    if (stepThrough)
+                    {
+                        yield return new WaitForSecondsRealtime(0.2f);
+                    }
                     DestroyImmediate(room.gameObject);
                     continue;
                 }
@@ -98,6 +105,11 @@ namespace Dungeon
                 prevRoom.neighbours[direction] = room;
                 var newDir = Vector3.Reflect(direction, direction);
                 room.neighbours[newDir] = prevRoom;
+
+                if (stepThrough)
+                {
+                    yield return new WaitForSecondsRealtime(0.2f);
+                }
             }
 
             //foreach (Room r in rooms)
@@ -129,8 +141,8 @@ namespace Dungeon
                 it++;
             }
             while (room.neighbours.Keys.Contains(direction));
-            
-            
+
+
 
 
             // Need to offset when going left or down, e.g. offset by prevRoom - room

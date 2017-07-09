@@ -17,7 +17,8 @@ public class MainMenu : MonoBehaviour
     void Awake()
     {
         _touchCanvas = GameObject.FindWithTag("UICanvas").GetComponent<Canvas>();
-        _pauseScreen = transform.Find("PauseScreen").gameObject;
+        //ScreenFade.fadedOut += transform.GetChild(0).gameObject.SetActive(true);
+            
     }
 
 

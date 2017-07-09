@@ -20,15 +20,15 @@ namespace Dungeon
         [Range(60, 120)] public int maxWidth;
         [Range(40, 60)] public int minHeight;
         [Range(60, 120)] public int maxHeight;
-
+        public bool stepThrough = true;
         public Vector2 dungeonSize;
 
-        public int[,] grid;
+        private int[,] grid;
 
-        public RoomGenerator roomGen;
-        public GraphGenerator graphGen;
-        public CorridorGenerator corridorGen;
-        public SpawnPlayer spawnPlayer;
+        private RoomGenerator roomGen;
+        private GraphGenerator graphGen;
+        private CorridorGenerator corridorGen;
+        private SpawnPlayer spawnPlayer;
 
         private void Awake()
         {
@@ -37,24 +37,24 @@ namespace Dungeon
             corridorGen = GetComponent<CorridorGenerator>();
             spawnPlayer = GetComponent<SpawnPlayer>();
 
-            Generate();
+            if (autoBuildAtStart)
+            {
+                Generate();
+            }
+
         }
 
         public override void Generate()
         {
             Random.InitState(seed);
 
-            print(Random.Range(0, 100));
-
-
             GenerateDungeon();
-
 
             var rooms = roomGen.Generate(dungeonSize);
             // Change dungeon size to be smallest size that fits all rooms.
             var graph = graphGen.Generate(rooms);
             corridorGen.Generate(rooms); // Will also accept the generated graph 
-            ResizeDungeon(rooms);
+            //ResizeDungeon(rooms);
             //UpdateGridWithRooms(roomGen.rooms);
             //spawnPlayer.Spawn(rooms.First());
 
@@ -85,31 +85,26 @@ namespace Dungeon
                 if (room == null) { continue; }
                 int rootX = (int)room.transform.position.x;
                 int rootY = (int)room.transform.position.z;
-                
+
                 for (int x = 0; x < room.width; x++)
                 {
                     for (int y = 0; y < room.height; y++)
                     {
                         bool edge = (x == 0 || y == 0 || x == room.width - 1 || y == room.height - 1);
-                      
+
                         grid[rootX + x, rootY + y] = edge ? (int)DungeonObjects.WALL : (int)DungeonObjects.FLOOR;
                     }
                 }
             }
         }
 
-        public void SetSeed(int _seed){
+        public void SetSeed(int _seed)
+        {
 
             Debug.Log("seed set to " + seed);
             seed = _seed;
         }
 
-        public int RandomiseSeed(){
-
-            var rand = new System.Random();
-            seed = rand.Next();
-            return seed;
-        }
 
         public override string ToString()
         {
@@ -127,6 +122,6 @@ namespace Dungeon
                 sb.Append("\n");
             }
             return sb.ToString();
-        }   
+        }
     }
 }

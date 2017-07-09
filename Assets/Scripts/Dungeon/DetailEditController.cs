@@ -9,7 +9,8 @@ public class DetailEditController : MonoBehaviour
 
     private DungeonGenerator dungeonGen;
 
-	// All the children components;
+    // All the children components;
+    private Transform detailPanel;
 	private InputField seedField;
 
 
@@ -19,6 +20,16 @@ public class DetailEditController : MonoBehaviour
     {
         dungeonGen = GameObject.FindWithTag("DungeonGenerator").GetComponent<DungeonGenerator>();
 		seedField = GetComponentInChildren<InputField>();
+        detailPanel = transform.Find("Details Panel");
+        detailPanel.gameObject.SetActive(false);
+
+        AsyncSceneTransition.ScreenFade.fadedOut += EnableDetails;
+    }
+
+    void EnableDetails()
+    {
+        detailPanel.gameObject.SetActive(true);
+
     }
 
     // Use this for initialization

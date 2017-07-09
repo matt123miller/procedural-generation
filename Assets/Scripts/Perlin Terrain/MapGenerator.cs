@@ -27,6 +27,12 @@ public class MapGenerator : ProceduralGenerator
 
     public TerrainType[] regions;
 
+    public void Awake()
+    {
+        AsyncSceneTransition.ScreenFade.fadedOut += RandomiseSeed;
+        AsyncSceneTransition.ScreenFade.fadedOut += Generate;
+    }
+
     public override void Generate()
     {
 

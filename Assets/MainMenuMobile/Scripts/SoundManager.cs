@@ -114,14 +114,14 @@ public class SoundManager : MonoBehaviour {
 
     public void ChangeSFXVol()
     {
-        if (SfxOn)
-        {
-            sfxMusicChannel.audioMixer.SetFloat("SFX", 0.0f);
-        }
-        else
-        {
-            sfxMusicChannel.audioMixer.SetFloat("SFX", -80.0f);
-        }
+        //if (SfxOn)
+        //{
+        //    sfxMusicChannel.audioMixer.SetFloat("SFX", 0.0f);
+        //}
+        //else
+        //{
+        //    sfxMusicChannel.audioMixer.SetFloat("SFX", -80.0f);
+        //}
         
     }
 

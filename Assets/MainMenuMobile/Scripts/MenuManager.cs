@@ -62,7 +62,7 @@ public class MenuManager : MonoBehaviour
 
     void SetUpMainMenu()
     {
-        optionsMenuPanel = GameObject.Find("Options Panel");
+        optionsMenuPanel = transform.GetChild(1).gameObject;
         // musicOnText = GameObject.Find("MusicText").GetComponent<Text>();
         // sfxOnText = GameObject.Find("SFXText").GetComponent<Text>();
         optionsMenuPanel.SetActive(false);
@@ -73,8 +73,8 @@ public class MenuManager : MonoBehaviour
     void SetUpPauseMenu()
     {
         pauseMenuPanel = GameObject.Find("PauseScreen");
-        musicOnText = GameObject.Find("MusicText").GetComponent<Text>();
-        sfxOnText = GameObject.Find("SFXText").GetComponent<Text>();
+        //musicOnText = GameObject.Find("MusicText").GetComponent<Text>();
+        //sfxOnText = GameObject.Find("SFXText").GetComponent<Text>();
         pauseMenuPanel.SetActive(false);
     }
 

@@ -16,7 +16,8 @@ public class SpawnPlayer : MonoBehaviour {
         }
         catch
         {
-            player = (GameObject)UnityEditor.PrefabUtility.InstantiatePrefab(playerPrefab);
+            // This line won't build to device. what?
+            //player = (GameObject)UnityEditor.PrefabUtility.InstantiatePrefab(playerPrefab);
         }
         
 

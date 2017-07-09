@@ -20,8 +20,7 @@ public class MapGeneratorEditor : Editor
 
         if (GUILayout.Button("Randomise Seed"))
         {
-            var rand = new System.Random();
-            mapGen.seed = rand.Next();
+            mapGen.RandomiseSeed();
             mapGen.Generate();
         }
         if (GUILayout.Button ("Generate")) {

@@ -76,8 +76,7 @@ namespace Dungeon
             _centre = new Vector3(width / 2, 0, height / 2);
             material = _material;
             neighbours = new Dictionary<Vector3, Room>();
-
-            print(Random.Range(0, 100));
+            
             tiles = GenerateTiles();
             walls = GenerateWalls();
         }

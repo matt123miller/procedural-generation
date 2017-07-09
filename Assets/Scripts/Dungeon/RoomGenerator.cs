@@ -9,7 +9,6 @@ namespace Dungeon
 {
     public class RoomGenerator : MonoBehaviour
     {
-        private int seed;
         [Range(10, 18)] public int minWidth;
         [Range(18, 30)] public int maxWidth;
         [Range(10, 18)] public int minHeight;
@@ -24,13 +23,9 @@ namespace Dungeon
 
         public List<Room> rooms;
 
-        public List<Room> Generate(Vector2 _dungeonSize, int _seed)
+        public List<Room> Generate(Vector2 _dungeonSize)
         {
             RemoveChildren();
-            seed = _seed;
-            //Random.InitState(seed);
-
-            print(Random.Range(0, 100));
 
             rooms = new List<Room>();
             dungeonSize = _dungeonSize;
@@ -57,6 +52,8 @@ namespace Dungeon
                                                     parent.AddComponent<Room>() :
                                                     parent.AddComponent<Corridor>();
                 room.SetupRoom(w, h, mat);
+                //TODO: Consider calling the room.createwalls() and createTiles() methods in this file, but only once we know everything is ok.
+                // This would speed up the failures as it won't create and then destory 100+ objects.
 
                 // Where to place the room?
 
@@ -119,11 +116,21 @@ namespace Dungeon
             int dx = Random.Range(0, 2) == 1 ? 1 : -1;
             int dy = Random.Range(0, 2) == 1 ? 1 : -1;
 
-            // Pick a direction, north south east or west
-            direction = directions.random();
+            //direction = directions.random();
 
             // TODO: Maybe check first to see if this direction is already used for that room?
-
+            // Currently doesn't work, but it doesn't break so I'll leave this here as WIP
+            int it = 1;
+            do
+            {
+                // Pick a direction, north south east or west
+                direction = directions.random();
+                print(string.Format("It took {0} attempts to find a good direction", it));
+                it++;
+            }
+            while (room.neighbours.Keys.Contains(direction));
+            
+            
 
 
             // Need to offset when going left or down, e.g. offset by prevRoom - room

@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Dungeon
 {
 
-    public class Room : MonoBehaviour
+    public class Room : ProceduralObject
     {
         #region Rect bounds and manipulation
         public float Top
@@ -56,6 +56,7 @@ namespace Dungeon
         }
 
         #endregion
+
         // Always treat width as X and height as Y;
         public int width, height;
         public int floorWidth, floorHeight;
@@ -78,7 +79,7 @@ namespace Dungeon
             neighbours = new Dictionary<Vector3, Room>();
             
             tiles = GenerateTiles();
-            walls = GenerateWalls();
+            //walls = GenerateWalls();
         }
 
         public Transform[,] GenerateTiles()
@@ -91,6 +92,7 @@ namespace Dungeon
                 {
                     // Offset by 1 all the time so they're inside the walls.
                     var tile = CreateFloor(w + 1, h + 1);
+                    tile.GetComponent<MeshRenderer>().sharedMaterial = material;
                     tiles[w, h] = tile.transform;
                 }
             }
@@ -130,33 +132,6 @@ namespace Dungeon
             walls.Add(CreateWall(width - 1, height - 1).transform);
 
             return walls.ToArray();
-        }
-
-        private GameObject CreateWall(int x, int z)
-        {
-            var wall = CreatePrimitive(x, z, PrimitiveType.Cube);
-            wall.transform.Translate(0, 0.5f, 0);
-            wall.layer = Layers.Wall;
-            wall.name = "Wall";
-            return wall;
-        }
-
-        private GameObject CreateFloor(int x, int z)
-        {
-            var tile = CreatePrimitive(x, z, PrimitiveType.Quad);
-            tile.transform.Rotate(90, 0, 0);
-            tile.layer = Layers.Floor;
-            tile.name = "Floor";
-            tile.GetComponent<MeshRenderer>().sharedMaterial = material;
-            return tile;
-        }
-
-        private GameObject CreatePrimitive(int x, int z, PrimitiveType type)
-        {
-            var primitive = GameObject.CreatePrimitive(type);
-            primitive.transform.position = new Vector3(x, 0, z);
-            primitive.transform.SetParent(transform);
-            return primitive;
         }
 
 

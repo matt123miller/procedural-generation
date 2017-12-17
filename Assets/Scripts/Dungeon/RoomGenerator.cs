@@ -55,6 +55,7 @@ namespace Dungeon
                                                     parent.AddComponent<Room>() :
                                                     parent.AddComponent<Corridor>();
                 room.SetupRoom(w, h, mat);
+
                 //TODO: Consider calling the room.createwalls() and createTiles() methods in this file, but only once we know everything is ok.
                 // This would speed up the failures as it won't create and then destory 100+ objects.
 
@@ -69,21 +70,23 @@ namespace Dungeon
                 }
 
                 int prevIndexMod = successes - 1;
+
+                // TODO: Somehow make this recursive instead of a weird loopback thing?
                 // This will be reused later
-                bool loopback = optionalRoomLoopbacks != 0 && (successes % optionalRoomLoopbacks + 2) == 0;
-                if (loopback)
-                {
-                    // Should we loop back to a previous room and try to place from there?
-                    prevIndexMod = successes - Random.Range(1, optionalRoomLoopbacks + 1);
-                    prevIndexMod = Mathf.Min(0, prevIndexMod);
-                }
+                //bool loopback = optionalRoomLoopbacks != 0 && (successes % optionalRoomLoopbacks + 2) == 0;
+                //if (loopback)
+                //{
+                //    // Should we loop back to a previous room and try to place from there?
+                //    prevIndexMod = successes - Random.Range(1, optionalRoomLoopbacks + 1);
+                //    prevIndexMod = Mathf.Min(0, prevIndexMod);
+                //}
 
                 Room prevRoom = rooms[prevIndexMod];
                 Vector3 direction = new Vector3();
 
                 room.transform.position = PlaceRoom(room, prevRoom, out direction);
 
-                // Is that space occupied somehow?
+                //// Is that space occupied somehow?
                 bool overlap = rooms.Any(r => room.IsOverlapping(r, true));
 
                 // If it is then lets destroy this room and move onto another
@@ -107,19 +110,14 @@ namespace Dungeon
                 var newDir = Vector3.Reflect(direction, direction);
                 room.neighbours[newDir] = prevRoom;
 
-                if (stepThrough)
+
+                if (stepThrough && Application.isPlaying)
                 {
                     yield return new WaitForSecondsRealtime(0.2f);
                 }
-            }
 
-            //foreach (Room r in rooms)
-            //{
-            //    foreach(var key in r.neighbours.Keys)
-            //    {
-            //        print(string.Format("{0} has neighbour {1} in direction {2}", r.name, r.neighbours[key].name, key));
-            //    }
-            //}
+            }
+            
         }
 
         private Vector3 PlaceRoom(Room room, Room prevRoom, out Vector3 direction)

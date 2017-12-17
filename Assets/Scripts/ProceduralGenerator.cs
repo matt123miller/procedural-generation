@@ -8,6 +8,7 @@ public abstract class ProceduralGenerator : MonoBehaviour {
     public bool autoUpdate;
     public bool autoBuildAtStart = false;
 
+    public abstract void CacheReferences();
     public abstract void Generate();
 
     public void RandomiseSeed()

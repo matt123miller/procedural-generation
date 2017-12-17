@@ -33,6 +33,8 @@ public class DungeonGeneratorEditor : Editor
             }
         }
 
+        dungeonGen.CacheReferences();
+
         if (GUILayout.Button("Randomise Seed"))
         {
             dungeonGen.RandomiseSeed();

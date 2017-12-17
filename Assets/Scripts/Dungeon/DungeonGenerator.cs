@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using System.Collections;
 using System.Linq;
 using System.Text;
+using System;
+using Random = UnityEngine.Random;
+
 
 namespace Dungeon
 {
@@ -32,10 +34,7 @@ namespace Dungeon
 
         private void Awake()
         {
-            roomGen = GetComponent<RoomGenerator>();
-            graphGen = GetComponent<GraphGenerator>();
-            corridorGen = GetComponent<CorridorGenerator>();
-            spawnPlayer = GetComponent<SpawnPlayer>();
+            CacheReferences();
 
             if (autoBuildAtStart)
             {
@@ -43,6 +42,15 @@ namespace Dungeon
             }
 
         }
+
+        public override void CacheReferences()
+        {
+            roomGen = GetComponent<RoomGenerator>();
+            graphGen = GetComponent<GraphGenerator>();
+            corridorGen = GetComponent<CorridorGenerator>();
+            spawnPlayer = GetComponent<SpawnPlayer>();
+        }
+
 
         public override void Generate()
         {
@@ -63,6 +71,9 @@ namespace Dungeon
 
         private void GenerateDungeon()
         {
+            // Remove any existing dungeon.
+            transform.DestroyChildren();
+
             int w = Random.Range(minWidth, maxWidth);
             int h = Random.Range(minHeight, maxHeight);
             dungeonSize = new Vector2(w, h);
@@ -73,9 +84,6 @@ namespace Dungeon
         {
             var maxWidth = rooms.Max(r => r.transform.position.x);
             var maxHeight = rooms.Max(r => r.transform.position.z);
-
-            //print(maxHeight);
-            //print(maxWidth);
         }
 
         private void UpdateGridWithRooms(List<Room> rooms)

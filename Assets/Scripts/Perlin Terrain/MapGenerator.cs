@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class MapGenerator : ProceduralGenerator
 {
+    private MapDisplay display;
 
     public enum DrawMode { NoiseMap, ColourMap, MeshMap };
     public DrawMode drawMode;
@@ -33,6 +35,11 @@ public class MapGenerator : ProceduralGenerator
         AsyncSceneTransition.ScreenFade.fadeOutFinished += Generate;
     }
 
+    public override void CacheReferences()
+    {
+        display = FindObjectOfType<MapDisplay>();
+    }
+
     public override void Generate()
     {
 
@@ -55,7 +62,6 @@ public class MapGenerator : ProceduralGenerator
             }
         }
 
-        MapDisplay display = FindObjectOfType<MapDisplay>();
 
         switch (drawMode)
         {

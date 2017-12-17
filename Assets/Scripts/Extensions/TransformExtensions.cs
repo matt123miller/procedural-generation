@@ -58,6 +58,14 @@ public static class TransformExtensions
         return null;
     }
 
+    public static void DestroyChildren(this Transform self)
+    {
+        foreach (Transform child in self)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+    }
+
     public static void LookAt2D(this Transform self, Transform target)
     {
         self.right = target.position - self.position;

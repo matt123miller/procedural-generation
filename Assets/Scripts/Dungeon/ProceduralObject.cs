@@ -6,7 +6,61 @@ namespace Dungeon
 {
     public class ProceduralObject : MonoBehaviour
     {
-        
+
+        #region Rect bounds and manipulation
+        public float Top
+        {
+            get
+            {
+                return transform.position.z + height;
+            }
+        }
+        public float Bottom
+        {
+            get
+            {
+                return transform.position.z;
+            }
+        }
+        public float Left
+        {
+            get
+            {
+                return transform.position.x;
+            }
+        }
+        public float Right
+        {
+            get
+            {
+                return transform.position.x + width;
+            }
+        }
+        public Vector3 Centre
+        {
+            get
+            {
+                return _centre;
+            }
+            set
+            {
+                _centre = value;
+                transform.position = new Vector3((int)(value.x - width / 2), 0, (int)(value.z - width / 2));
+            }
+        }
+        public void SetPosition(Vector3 newPos)
+        {
+            transform.position = newPos;
+            _centre = new Vector3(newPos.x + width / 2, 0, newPos.z + width / 2);
+        }
+
+        #endregion
+
+        // Always treat width as X and height as Y;
+        public int width, height;
+        [SerializeField]
+        protected Vector3 _centre;
+
         protected GameObject CreateWall(int x, int z)
         {
             var wall = CreatePrimitive(x, z, PrimitiveType.Cube);

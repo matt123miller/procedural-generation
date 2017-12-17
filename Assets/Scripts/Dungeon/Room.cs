@@ -8,60 +8,6 @@ namespace Dungeon
 
     public class Room : ProceduralObject
     {
-        #region Rect bounds and manipulation
-        public float Top
-        {
-            get
-            {
-                return transform.position.z + height;
-            }
-        }
-        public float Bottom
-        {
-            get
-            {
-                return transform.position.z;
-            }
-        }
-        public float Left
-        {
-            get
-            {
-                return transform.position.x;
-            }
-        }
-        public float Right
-        {
-            get
-            {
-                return transform.position.x + width;
-            }
-        }
-        public Vector3 Centre
-        {
-            get
-            {
-                return _centre;
-            }
-            set
-            {
-                _centre = value;
-                transform.position = new Vector3((int)(value.x - width / 2), 0, (int)(value.z - width / 2));
-            }
-        }
-        public void SetPosition(Vector3 newPos)
-        {
-            transform.position = newPos;
-            _centre = new Vector3(newPos.x + width / 2, 0, newPos.z + width / 2);
-        }
-
-        #endregion
-
-        // Always treat width as X and height as Y;
-        public int width, height;
-        public int floorWidth, floorHeight;
-        [SerializeField]
-        private Vector3 _centre;
         private Material material;
         public Transform[,] tiles;
         public Transform[] walls;
@@ -72,8 +18,6 @@ namespace Dungeon
         {
             width = _width;
             height = _height;
-            floorWidth = _width - 2;
-            floorHeight = _height - 2;
             _centre = new Vector3(width / 2, 0, height / 2);
             material = _material;
             neighbours = new Dictionary<Vector3, Room>();
@@ -86,9 +30,9 @@ namespace Dungeon
         {
             Transform[,] tiles = new Transform[width, height];
 
-            for (int w = 0; w < floorWidth; w++)
+            for (int w = 0; w < width; w++)
             {
-                for (int h = 0; h < floorHeight; h++)
+                for (int h = 0; h < height; h++)
                 {
                     // Offset by 1 all the time so they're inside the walls.
                     var tile = CreateFloor(w + 1, h + 1);
@@ -109,7 +53,7 @@ namespace Dungeon
             {
                 int z = (height - 1) * i;
                 // Make the walls along the width
-                for (int w = 0; w < floorWidth; w++)
+                for (int w = 0; w < width; w++)
                 {
                     var wall = CreateWall(w + 1, z);
                     walls.Add(wall.transform);
@@ -117,7 +61,7 @@ namespace Dungeon
                 }
                 int x = (width - 1) * i;
                 // Make the walls along height
-                for (int h = 0; h < floorHeight; h++)
+                for (int h = 0; h < height; h++)
                 {
                     var wall = CreateWall(x, h + 1);
                     walls.Add(wall.transform);

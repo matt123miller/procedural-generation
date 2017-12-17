@@ -152,8 +152,8 @@ namespace Dungeon
             var edgeOffset = new Vector3(prevRoom.width * direction.x + widthOffset, 0, prevRoom.height * direction.z + heightOffset);
 
             // Make some random offest along the chosen edge, makes it look less square.
-            int vx = Random.Range(1, prevRoom.floorWidth / 2);
-            int vz = Random.Range(1, prevRoom.floorHeight / 2);
+            int vx = Random.Range(1, prevRoom.width / 2);
+            int vz = Random.Range(1, prevRoom.height / 2);
             // Flipping the direction z and x multiplication here neatly allows me to switch from moving towards an edge to moving along it
             // It's just easy to miss so watch out for that.
             var variationOffset = new Vector3(vx * direction.z, 0, vz * direction.x);

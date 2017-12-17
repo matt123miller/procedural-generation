@@ -75,6 +75,7 @@ namespace Dungeon
                 {
                     // Should we loop back to a previous room and try to place from there?
                     prevIndexMod = successes - Random.Range(1, optionalRoomLoopbacks + 1);
+                    prevIndexMod = Mathf.Min(0, prevIndexMod);
                 }
 
                 Room prevRoom = rooms[prevIndexMod];

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEditor;
 using UnityEngine;
 //using Random = System.Random;
 
@@ -32,7 +33,11 @@ namespace Dungeon
             dungeonSize = _dungeonSize;
 
             //var createRoomsRoutine = CreateRooms(dungeonSize);
-            StartCoroutine(CreateRooms(dungeonSize));
+            if (EditorApplication.isPlaying)
+            {
+                StartCoroutine(CreateRooms(dungeonSize));
+
+            }
 
             return rooms;
         }
@@ -93,7 +98,7 @@ namespace Dungeon
                 if (overlap)
                 {
                     print("Failure");
-                    if (stepThrough)
+                    if (stepThrough && EditorApplication.isPlaying)
                     {
                         yield return new WaitForSecondsRealtime(0.2f);
                     }
@@ -110,8 +115,7 @@ namespace Dungeon
                 var newDir = Vector3.Reflect(direction, direction);
                 room.neighbours[newDir] = prevRoom;
 
-
-                if (stepThrough && Application.isPlaying)
+                if (stepThrough && EditorApplication.isPlaying)
                 {
                     yield return new WaitForSecondsRealtime(0.2f);
                 }

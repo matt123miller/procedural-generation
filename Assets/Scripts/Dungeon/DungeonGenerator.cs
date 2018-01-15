@@ -108,7 +108,6 @@ namespace Dungeon
 
         public void SetSeed(int _seed)
         {
-
             Debug.Log("seed set to " + seed);
             seed = _seed;
         }

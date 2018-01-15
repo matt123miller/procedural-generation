@@ -35,9 +35,8 @@ public class DetailEditController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        // Set the ranges of things here based on the dungeon generator?
-
-        seedField.text = dungeonGen.seed.ToString();
+		// Set the ranges of things here based on the dungeon generator?
+		seedField.text = dungeonGen.seed.ToString();
     }
 
 

@@ -60,7 +60,7 @@ namespace Dungeon
                                                     parent.AddComponent<Room>() :
                                                     parent.AddComponent<Corridor>();
                 
-                room.InitialiseRoomData(w, h, mat);
+                room.InitialiseWithData(i, w, h, mat);
 
                 // Where to place the room?
 
@@ -93,7 +93,7 @@ namespace Dungeon
                 
                 Vector3 chosenRootPosition = DecideRoomPlacement(room, adjoiningRoom, direction);
 
-                room.transform.position = chosenRootPosition;
+                room.SetPosition(chosenRootPosition);
 
                 // Is that space occupied somehow?
                 bool overlap = rooms.Any(r => room.IsOverlapping(r, true));

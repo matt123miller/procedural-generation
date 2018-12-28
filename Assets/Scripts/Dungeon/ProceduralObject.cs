@@ -8,34 +8,12 @@ namespace Dungeon
     {
 
         #region Rect bounds and manipulation
-        public float Top
-        {
-            get
-            {
-                return transform.position.z + height;
-            }
-        }
-        public float Bottom
-        {
-            get
-            {
-                return transform.position.z;
-            }
-        }
-        public float Left
-        {
-            get
-            {
-                return transform.position.x;
-            }
-        }
-        public float Right
-        {
-            get
-            {
-                return transform.position.x + width;
-            }
-        }
+
+        protected float Top => transform.position.z + height;
+        protected float Bottom => transform.position.z;
+        protected float Left => transform.position.x;
+        protected float Right => transform.position.x + width;
+
         public Vector3 Centre
         {
             get

@@ -26,21 +26,25 @@ namespace Dungeon
         public void Create()
         {
             tiles = GenerateTiles();
-//            walls = GenerateWalls();
+            walls = GenerateWalls();
         }
 
         private Transform[,] GenerateTiles()
         {
             Transform[,] tiles = new Transform[width, height];
+            
+            // Resharper told me to cache this to avoid going between manager and unmanaged code twice.
+            // Good reason I guess.
             var pos = transform.position;
-            int baseX = (int)pos.x;
-            int baseZ = (int)pos.z;
+            var offsetX = (int)pos.x;
+            var offsetZ = (int)pos.z;
+            
             for (int w = 0; w < width; w++)
             {
                 for (int h = 0; h < height; h++)
                 {
                     // Offset by 1 all the time so they're inside the walls.
-                    var tile = CreateFloor(w + baseX +  1, h + baseZ + 1);
+                    var tile = CreateFloor(w + offsetX +  1, h + offsetZ + 1);
                     tile.GetComponent<MeshRenderer>().sharedMaterial = material;
                     tiles[w, h] = tile.transform;
                     transform.AddChild(tile.transform);
@@ -54,32 +58,37 @@ namespace Dungeon
         {
             List<Transform> walls = new List<Transform>();
 
+            var pos = transform.position;
+            var offsetX = (int)pos.x;
+            var offsetZ = (int)pos.z;
+            
             int[] edge = { 0, 1 };
             foreach (var i in edge)
             {
-                int z = (height - 1) * i;
-                // Make the walls along the width
-                for (int w = 0; w < width; w++)
+                int z = (height + 1) * i + offsetZ;
+                // Make the walls along the top and bottom edges
+                for (int w = 1; w <= width; w++)
                 {
-                    var wall = CreateWall(w + 1, z);
+                    var wall = CreateWall(w + offsetX, z );
                     walls.Add(wall.transform);
-                    wall.name = "width";
+                    wall.name = i == 0 ? "bottom" : "top";
                 }
-                int x = (width - 1) * i;
-                // Make the walls along height
-                for (int h = 0; h < height; h++)
+
+                int x = (width + 1) * i + offsetX;
+                // Make the walls along left and right edges
+                for (int h = 1; h <= height; h++)
                 {
-                    var wall = CreateWall(x, h + 1);
+                    var wall = CreateWall(x, h + offsetZ);
                     walls.Add(wall.transform);
-                    wall.name = "height";
+                    wall.name = i == 0 ? "left" : "right";
                 }
             }
 
             // Easier to use simpler loops and create 4 corners manually
-            walls.Add(CreateWall(0, 0).transform);
-            walls.Add(CreateWall(0, height - 1).transform);
-            walls.Add(CreateWall(width - 1, 0).transform);
-            walls.Add(CreateWall(width - 1, height - 1).transform);
+            walls.Add(CreateWall(offsetX, offsetZ).transform);
+            walls.Add(CreateWall(offsetX, offsetZ + height + 1).transform);
+            walls.Add(CreateWall(offsetX + width + 1, offsetZ).transform);
+            walls.Add(CreateWall(offsetX + width + 1, offsetZ + height + 1).transform);
 
             return walls.ToArray();
         }

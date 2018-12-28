@@ -96,7 +96,7 @@ namespace Dungeon
                 room.transform.position = chosenRootPosition;
 
                 // Is that space occupied somehow?
-                bool overlap = rooms.Any(r => room.IsOverlapping(r, false));
+                bool overlap = rooms.Any(r => room.IsOverlapping(r, true));
 
                 // If it is then lets destroy this room and move onto another
                 if (overlap)
@@ -140,8 +140,8 @@ namespace Dungeon
             Vector3 target;
 
             // Need to offset when going left or down, e.g. offset by prevRoom - room
-            int widthOffset = Mathf.Approximately(direction.x, -1) ? (adjoiningRoom.width - room.width) : 0;
-            int heightOffset = Mathf.Approximately(direction.z, -1) ? (adjoiningRoom.height - room.height) : 0;
+            int widthOffset = Mathf.Approximately(direction.x, -1) ? (adjoiningRoom.width - room.width) - 1 : 1;
+            int heightOffset = Mathf.Approximately(direction.z, -1) ? (adjoiningRoom.height - room.height) - 1 : 1;
             var edgeOffset = new Vector3(adjoiningRoom.width * direction.x + widthOffset, 0, adjoiningRoom.height * direction.z + heightOffset);
 
             // Make some random offset along the chosen edge, makes it look less square.

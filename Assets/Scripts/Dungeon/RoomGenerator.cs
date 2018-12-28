@@ -55,7 +55,7 @@ namespace Dungeon
                 int h = Random.Range(minHeight, maxHeight);
                 var mat = materials.random();
 
-                // Corridors are still a type of room, just with a different data initialistation
+                // Corridors are still a type of room, just with a different data initialisation
                 Room room = Random.Range(0, 100) > corridorChance ?
                                                     parent.AddComponent<Room>() :
                                                     parent.AddComponent<Corridor>();

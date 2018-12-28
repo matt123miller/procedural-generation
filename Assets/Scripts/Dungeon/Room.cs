@@ -65,30 +65,30 @@ namespace Dungeon
             int[] edge = { 0, 1 };
             foreach (var i in edge)
             {
-                int z = (height) * i + offsetZ;
-                // Make the walls along the top and bottom
+                int z = (height + 1) * i + offsetZ;
+                // Make the walls along the top and bottom edges
                 for (int w = 1; w <= width; w++)
                 {
                     var wall = CreateWall(w + offsetX, z );
                     walls.Add(wall.transform);
-                    wall.name = "width";
+                    wall.name = i == 0 ? "bottom" : "top";
                 }
 
-                int x = (width) * i + offsetX;
-                // Make the walls along left and right
+                int x = (width + 1) * i + offsetX;
+                // Make the walls along left and right edges
                 for (int h = 1; h <= height; h++)
                 {
                     var wall = CreateWall(x, h + offsetZ);
                     walls.Add(wall.transform);
-                    wall.name = "height";
+                    wall.name = i == 0 ? "left" : "right";
                 }
             }
 
             // Easier to use simpler loops and create 4 corners manually
-//            walls.Add(CreateWall(0, 0).transform);
-//            walls.Add(CreateWall(0, height - 1).transform);
-//            walls.Add(CreateWall(width - 1, 0).transform);
-//            walls.Add(CreateWall(width - 1, height - 1).transform);
+            walls.Add(CreateWall(offsetX, offsetZ).transform);
+            walls.Add(CreateWall(offsetX, offsetZ + height + 1).transform);
+            walls.Add(CreateWall(offsetX + width + 1, offsetZ).transform);
+            walls.Add(CreateWall(offsetX + width + 1, offsetZ + height + 1).transform);
 
             return walls.ToArray();
         }

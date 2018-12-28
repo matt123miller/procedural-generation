@@ -59,11 +59,10 @@ namespace Dungeon
             InitialiseDungeon();
 
             var rooms = roomGen.Generate(dungeonSize);
-            // Change dungeon size to be smallest size that fits all rooms.
-            var graph = graphGen.Generate(rooms);
             
+            // Change dungeon size to be smallest size that fits all rooms.
             ResizeDungeon(rooms);
-            //UpdateGridWithRooms(roomGen.rooms);
+//            UpdateGridWithRooms(roomGen.rooms);
             //spawnPlayer.Spawn(rooms.First());
 
             //print(this);

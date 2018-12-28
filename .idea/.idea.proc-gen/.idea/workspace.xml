@@ -3,10 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="359fbbcd-438b-4c9f-9c59-cc20d23469a2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.proc-gen/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.proc-gen/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/DungeonGen.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/DungeonGen.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Dungeon/DungeonGenerator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Dungeon/DungeonGenerator.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Dungeon/Room.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Dungeon/Room.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Dungeon/RoomGenerator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Dungeon/RoomGenerator.cs" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -45,11 +42,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/Dungeon/RoomGenerator.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="108">
-              <caret line="116" column="28" lean-forward="true" selection-start-line="116" selection-start-column="28" selection-end-line="116" selection-end-column="28" />
+            <state relative-caret-position="-46">
+              <caret line="140" lean-forward="true" selection-start-line="140" selection-end-line="140" />
               <folding>
                 <marker date="1546012107486" expanded="true" signature="6:135" ph="..." />
                 <marker date="1546012107486" expanded="true" signature="186:7595" ph="{...}" />
@@ -77,61 +74,32 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/Dungeon/Room.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="29" column="9" lean-forward="true" selection-start-line="29" selection-start-column="9" selection-end-line="29" selection-end-column="9" />
+            <state relative-caret-position="236">
+              <caret line="79" column="17" lean-forward="true" selection-start-line="79" selection-start-column="17" selection-end-line="79" selection-end-column="17" />
               <folding>
-                <marker date="1546012110304" expanded="false" signature="6:97" ph="..." />
-                <marker date="1546012110304" expanded="true" signature="116:4528" ph="{...}" />
-                <marker date="1546012110304" expanded="true" signature="160:4526" ph="{...}" />
-                <marker date="1546012110304" expanded="true" signature="417:648" ph="{...}" />
-                <marker date="1546012110304" expanded="true" signature="678:772" ph="{...}" />
-                <marker date="1546012110304" expanded="true" signature="818:1538" ph="{...}" />
-                <marker date="1546012110304" expanded="true" signature="1049:1501" ph="{...}" />
-                <marker date="1546012110304" expanded="true" signature="1112:1487" ph="{...}" />
-                <marker date="1546012110304" expanded="true" signature="1583:2743" ph="{...}" />
-                <marker date="1546012110304" expanded="true" signature="1724:2384" ph="{...}" />
-                <marker date="1546012110304" expanded="true" signature="1878:2055" ph="{...}" />
-                <marker date="1546012110304" expanded="true" signature="2192:2370" ph="{...}" />
-                <marker date="1546012110304" expanded="true" signature="2797:3022" ph="{...}" />
-                <marker date="1546012110304" expanded="true" signature="3094:3837" ph="{...}" />
-                <marker date="1546012110304" expanded="true" signature="3254:3575" ph="{...}" />
-                <marker date="1546012110304" expanded="true" signature="3285:3365" ph="/* Unsure about all the -2. ... */" />
-                <marker date="1546012110304" expanded="true" signature="3592:3784" ph="{...}" />
-                <marker date="1546012110304" expanded="true" signature="3847:4520" ph="/* public override string ToString() ... */" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Assets/Scripts/Dungeon/ProceduralObject.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="125">
-              <caret line="82" column="9" lean-forward="true" selection-start-line="82" selection-start-column="9" selection-end-line="82" selection-end-column="9" />
-              <folding>
-                <marker date="1546011520177" expanded="false" signature="6:78" ph="..." />
-                <marker date="1546011520177" expanded="true" signature="97:2601" ph="{...}" />
-                <marker date="1546011520177" expanded="true" signature="149:2599" ph="{...}" />
-                <marker date="1546011520177" expanded="true" signature="165:1283" ph="Rect bounds and manipulation" />
-                <marker date="1546011520177" expanded="true" signature="226:344" ph="{...}" />
-                <marker date="1546011520177" expanded="true" signature="252:334" ph="{...}" />
-                <marker date="1546011520177" expanded="true" signature="372:481" ph="{...}" />
-                <marker date="1546011520177" expanded="true" signature="398:471" ph="{...}" />
-                <marker date="1546011520177" expanded="true" signature="507:616" ph="{...}" />
-                <marker date="1546011520177" expanded="true" signature="533:606" ph="{...}" />
-                <marker date="1546011520177" expanded="true" signature="643:760" ph="{...}" />
-                <marker date="1546011520177" expanded="true" signature="669:750" ph="{...}" />
-                <marker date="1546011520177" expanded="true" signature="790:1072" ph="{...}" />
-                <marker date="1546011520177" expanded="true" signature="816:876" ph="{...}" />
-                <marker date="1546011520177" expanded="true" signature="892:1062" ph="{...}" />
-                <marker date="1546011520177" expanded="true" signature="1120:1263" ph="{...}" />
-                <marker date="1546011520177" expanded="true" signature="1485:1716" ph="{...}" />
-                <marker date="1546011520177" expanded="true" signature="1771:1997" ph="{...}" />
-                <marker date="1546011520177" expanded="true" signature="2053:2281" ph="{...}" />
-                <marker date="1546011520177" expanded="true" signature="2361:2592" ph="{...}" />
+                <marker date="1546014339443" expanded="false" signature="6:97" ph="..." />
+                <marker date="1546014339443" expanded="true" signature="116:4892" ph="{...}" />
+                <marker date="1546014339443" expanded="true" signature="160:4890" ph="{...}" />
+                <marker date="1546014339443" expanded="true" signature="417:648" ph="{...}" />
+                <marker date="1546014339443" expanded="true" signature="678:772" ph="{...}" />
+                <marker date="1546014339443" expanded="true" signature="818:1712" ph="{...}" />
+                <marker date="1546014339443" expanded="true" signature="917:1044" ph="/* Resharper told me to cache this to avoid going between manager and unmanaged code twice. ... */" />
+                <marker date="1546014339443" expanded="true" signature="1219:1675" ph="{...}" />
+                <marker date="1546014339443" expanded="true" signature="1282:1661" ph="{...}" />
+                <marker date="1546014339443" expanded="true" signature="1757:3107" ph="{...}" />
+                <marker date="1546014339443" expanded="true" signature="2029:2740" ph="{...}" />
+                <marker date="1546014339443" expanded="true" signature="2202:2386" ph="{...}" />
+                <marker date="1546014339443" expanded="true" signature="2542:2726" ph="{...}" />
+                <marker date="1546014339443" expanded="true" signature="2754:3060" ph="/* Easier to use simpler loops and create 4 corners manually ... */" />
+                <marker date="1546014339443" expanded="true" signature="3161:3386" ph="{...}" />
+                <marker date="1546014339443" expanded="true" signature="3458:4201" ph="{...}" />
+                <marker date="1546014339443" expanded="true" signature="3618:3939" ph="{...}" />
+                <marker date="1546014339443" expanded="true" signature="3649:3729" ph="/* Unsure about all the -2. ... */" />
+                <marker date="1546014339443" expanded="true" signature="3956:4148" ph="{...}" />
+                <marker date="1546014339443" expanded="true" signature="4211:4884" ph="/* public override string ToString() ... */" />
               </folding>
             </state>
           </provider>
@@ -279,12 +247,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1546005199759</updated>
-      <workItem from="1546005204373" duration="6810000" />
+      <workItem from="1546005204373" duration="8882000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6810000" />
+    <option name="totallyTimeSpent" value="8882000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -358,13 +326,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Dungeon/Room.cs</url>
-          <line>102</line>
+          <line>111</line>
           <properties documentPath="$PROJECT_DIR$/Assets/Scripts/Dungeon/Room.cs" initialLine="99">
             <startOffsets>
-              <option value="3233" />
+              <option value="3597" />
             </startOffsets>
             <endOffsets>
-              <option value="3254" />
+              <option value="3618" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="7" />
@@ -1165,35 +1133,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Dungeon/ProceduralObject.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="82" column="9" lean-forward="true" selection-start-line="82" selection-start-column="9" selection-end-line="82" selection-end-column="9" />
-          <folding>
-            <marker date="1546011520177" expanded="false" signature="6:78" ph="..." />
-            <marker date="1546011520177" expanded="true" signature="97:2601" ph="{...}" />
-            <marker date="1546011520177" expanded="true" signature="149:2599" ph="{...}" />
-            <marker date="1546011520177" expanded="true" signature="165:1283" ph="Rect bounds and manipulation" />
-            <marker date="1546011520177" expanded="true" signature="226:344" ph="{...}" />
-            <marker date="1546011520177" expanded="true" signature="252:334" ph="{...}" />
-            <marker date="1546011520177" expanded="true" signature="372:481" ph="{...}" />
-            <marker date="1546011520177" expanded="true" signature="398:471" ph="{...}" />
-            <marker date="1546011520177" expanded="true" signature="507:616" ph="{...}" />
-            <marker date="1546011520177" expanded="true" signature="533:606" ph="{...}" />
-            <marker date="1546011520177" expanded="true" signature="643:760" ph="{...}" />
-            <marker date="1546011520177" expanded="true" signature="669:750" ph="{...}" />
-            <marker date="1546011520177" expanded="true" signature="790:1072" ph="{...}" />
-            <marker date="1546011520177" expanded="true" signature="816:876" ph="{...}" />
-            <marker date="1546011520177" expanded="true" signature="892:1062" ph="{...}" />
-            <marker date="1546011520177" expanded="true" signature="1120:1263" ph="{...}" />
-            <marker date="1546011520177" expanded="true" signature="1485:1716" ph="{...}" />
-            <marker date="1546011520177" expanded="true" signature="1771:1997" ph="{...}" />
-            <marker date="1546011520177" expanded="true" signature="2053:2281" ph="{...}" />
-            <marker date="1546011520177" expanded="true" signature="2361:2592" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/489D32F7-DC5F-4751-B1A7-83D0CA195E1F/47/eee82209/pb_Math.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="174">
@@ -1228,37 +1167,39 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Dungeon/Room.cs">
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Dungeon/ProceduralObject.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="29" column="9" lean-forward="true" selection-start-line="29" selection-start-column="9" selection-end-line="29" selection-end-column="9" />
+        <state relative-caret-position="65">
+          <caret line="78" column="24" lean-forward="true" selection-start-line="78" selection-start-column="24" selection-end-line="78" selection-end-column="24" />
           <folding>
-            <marker date="1546012110304" expanded="false" signature="6:97" ph="..." />
-            <marker date="1546012110304" expanded="true" signature="116:4528" ph="{...}" />
-            <marker date="1546012110304" expanded="true" signature="160:4526" ph="{...}" />
-            <marker date="1546012110304" expanded="true" signature="417:648" ph="{...}" />
-            <marker date="1546012110304" expanded="true" signature="678:772" ph="{...}" />
-            <marker date="1546012110304" expanded="true" signature="818:1538" ph="{...}" />
-            <marker date="1546012110304" expanded="true" signature="1049:1501" ph="{...}" />
-            <marker date="1546012110304" expanded="true" signature="1112:1487" ph="{...}" />
-            <marker date="1546012110304" expanded="true" signature="1583:2743" ph="{...}" />
-            <marker date="1546012110304" expanded="true" signature="1724:2384" ph="{...}" />
-            <marker date="1546012110304" expanded="true" signature="1878:2055" ph="{...}" />
-            <marker date="1546012110304" expanded="true" signature="2192:2370" ph="{...}" />
-            <marker date="1546012110304" expanded="true" signature="2797:3022" ph="{...}" />
-            <marker date="1546012110304" expanded="true" signature="3094:3837" ph="{...}" />
-            <marker date="1546012110304" expanded="true" signature="3254:3575" ph="{...}" />
-            <marker date="1546012110304" expanded="true" signature="3285:3365" ph="/* Unsure about all the -2. ... */" />
-            <marker date="1546012110304" expanded="true" signature="3592:3784" ph="{...}" />
-            <marker date="1546012110304" expanded="true" signature="3847:4520" ph="/* public override string ToString() ... */" />
+            <marker date="1546011520177" expanded="false" signature="6:78" ph="..." />
+            <marker date="1546011520177" expanded="true" signature="97:2601" ph="{...}" />
+            <marker date="1546011520177" expanded="true" signature="149:2599" ph="{...}" />
+            <marker date="1546011520177" expanded="true" signature="165:1283" ph="Rect bounds and manipulation" />
+            <marker date="1546011520177" expanded="true" signature="226:344" ph="{...}" />
+            <marker date="1546011520177" expanded="true" signature="252:334" ph="{...}" />
+            <marker date="1546011520177" expanded="true" signature="372:481" ph="{...}" />
+            <marker date="1546011520177" expanded="true" signature="398:471" ph="{...}" />
+            <marker date="1546011520177" expanded="true" signature="507:616" ph="{...}" />
+            <marker date="1546011520177" expanded="true" signature="533:606" ph="{...}" />
+            <marker date="1546011520177" expanded="true" signature="643:760" ph="{...}" />
+            <marker date="1546011520177" expanded="true" signature="669:750" ph="{...}" />
+            <marker date="1546011520177" expanded="true" signature="790:1072" ph="{...}" />
+            <marker date="1546011520177" expanded="true" signature="816:876" ph="{...}" />
+            <marker date="1546011520177" expanded="true" signature="892:1062" ph="{...}" />
+            <marker date="1546011520177" expanded="true" signature="1120:1263" ph="{...}" />
+            <marker date="1546011520177" expanded="true" signature="1485:1716" ph="{...}" />
+            <marker date="1546011520177" expanded="true" signature="1771:1997" ph="{...}" />
+            <marker date="1546011520177" expanded="true" signature="2053:2281" ph="{...}" />
+            <marker date="1546011520177" expanded="true" signature="2361:2592" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/Dungeon/RoomGenerator.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="116" column="28" lean-forward="true" selection-start-line="116" selection-start-column="28" selection-end-line="116" selection-end-column="28" />
+        <state relative-caret-position="-46">
+          <caret line="140" lean-forward="true" selection-start-line="140" selection-end-line="140" />
           <folding>
             <marker date="1546012107486" expanded="true" signature="6:135" ph="..." />
             <marker date="1546012107486" expanded="true" signature="186:7595" ph="{...}" />
@@ -1281,6 +1222,35 @@
             <marker date="1546012107486" expanded="true" signature="7205:7242" ph="{...}" />
             <marker date="1546012107486" expanded="true" signature="7339:7587" ph="{...}" />
             <marker date="1546012107486" expanded="true" signature="7442:7577" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Dungeon/Room.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="236">
+          <caret line="79" column="17" lean-forward="true" selection-start-line="79" selection-start-column="17" selection-end-line="79" selection-end-column="17" />
+          <folding>
+            <marker date="1546014339443" expanded="false" signature="6:97" ph="..." />
+            <marker date="1546014339443" expanded="true" signature="116:4892" ph="{...}" />
+            <marker date="1546014339443" expanded="true" signature="160:4890" ph="{...}" />
+            <marker date="1546014339443" expanded="true" signature="417:648" ph="{...}" />
+            <marker date="1546014339443" expanded="true" signature="678:772" ph="{...}" />
+            <marker date="1546014339443" expanded="true" signature="818:1712" ph="{...}" />
+            <marker date="1546014339443" expanded="true" signature="917:1044" ph="/* Resharper told me to cache this to avoid going between manager and unmanaged code twice. ... */" />
+            <marker date="1546014339443" expanded="true" signature="1219:1675" ph="{...}" />
+            <marker date="1546014339443" expanded="true" signature="1282:1661" ph="{...}" />
+            <marker date="1546014339443" expanded="true" signature="1757:3107" ph="{...}" />
+            <marker date="1546014339443" expanded="true" signature="2029:2740" ph="{...}" />
+            <marker date="1546014339443" expanded="true" signature="2202:2386" ph="{...}" />
+            <marker date="1546014339443" expanded="true" signature="2542:2726" ph="{...}" />
+            <marker date="1546014339443" expanded="true" signature="2754:3060" ph="/* Easier to use simpler loops and create 4 corners manually ... */" />
+            <marker date="1546014339443" expanded="true" signature="3161:3386" ph="{...}" />
+            <marker date="1546014339443" expanded="true" signature="3458:4201" ph="{...}" />
+            <marker date="1546014339443" expanded="true" signature="3618:3939" ph="{...}" />
+            <marker date="1546014339443" expanded="true" signature="3649:3729" ph="/* Unsure about all the -2. ... */" />
+            <marker date="1546014339443" expanded="true" signature="3956:4148" ph="{...}" />
+            <marker date="1546014339443" expanded="true" signature="4211:4884" ph="/* public override string ToString() ... */" />
           </folding>
         </state>
       </provider>

@@ -28,6 +28,7 @@ namespace Dungeon
         private int[,] grid;
 
         private RoomGenerator roomGen;
+        private DoorGenerator doorGen;
         private GraphGenerator graphGen;
         private CorridorGenerator corridorGen;
         private SpawnPlayer spawnPlayer;
@@ -46,6 +47,7 @@ namespace Dungeon
         public override void CacheReferences()
         {
             roomGen = GetComponent<RoomGenerator>();
+            doorGen = GetComponent<DoorGenerator>();
             graphGen = GetComponent<GraphGenerator>();
             corridorGen = GetComponent<CorridorGenerator>();
             spawnPlayer = GetComponent<SpawnPlayer>();
@@ -59,6 +61,8 @@ namespace Dungeon
             InitialiseDungeon();
 
             var rooms = roomGen.Generate(dungeonSize);
+            var doors = doorGen.Generate(rooms);
+            
             
             // Change dungeon size to be smallest size that fits all rooms.
             ResizeDungeon(rooms);

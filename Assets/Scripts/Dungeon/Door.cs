@@ -6,10 +6,13 @@ namespace Dungeon {
 
     public class Door : ProceduralObject
     {
+    
+        public Dictionary<Vector3, Room> neighbours;
 
-        public virtual void SetupRoom(int _width, int _height, Material _material)
+        
+        public void InitialiseWithData(int _width, int _height, Material _material)
         { 
-            CreateDoor(_width, _height);
+            
         }
     }
 }

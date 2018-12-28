@@ -424,6 +424,7 @@
             <e p="CorridorGenerator.cs" t="Include" />
             <e p="DetailEditController.cs" t="Include" />
             <e p="Door.cs" t="Include" />
+            <e p="DoorGenerator.cs" t="Include" />
             <e p="DungeonGenerator.cs" t="Include" />
             <e p="GraphGenerator.cs" t="Include" />
             <e p="MinMaxRangeAttribute.cs" t="Include" />

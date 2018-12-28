@@ -29,8 +29,8 @@ namespace Dungeon
                 // Find shared boundary relationship as rooms usually have more than 1 door
                 var relationships = FindRoomRelationships(currentRoom, nextRoom);
 
-                // Find the vector along which that boundary exists
-                
+                // Find a position along the shared boundary to place a door at
+                var boundary = FindDoorPositionAlongBoundary(relationships);
                 
                 // Add doors at neighbour boundaries
         
@@ -44,6 +44,18 @@ namespace Dungeon
             return new List<Door>();
         }
 
+        private object FindDoorPositionAlongBoundary(Dictionary<Vector3, Room> relationships)
+        {
+            throw new NotImplementedException();
+            
+            /**
+             *
+             * If they share a top/bottom boundary then....
+             * See my notebook for details.
+             * Too tired tonight
+             * 
+             */
+        }
 
         private Dictionary<Vector3, Room> FindRoomRelationships(Room currentRoom, Room nextRoom)
         {

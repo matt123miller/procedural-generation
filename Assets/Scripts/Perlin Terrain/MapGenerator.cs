@@ -25,14 +25,14 @@ public class MapGenerator : ProceduralGenerator
 
     public Vector2 offset;
     public AnimationCurve heightCurve;
-    
+
 
     public TerrainType[] regions;
 
     public void Awake()
     {
-        AsyncSceneTransition.ScreenFade.fadeOutFinished += RandomiseSeed;
-        AsyncSceneTransition.ScreenFade.fadeOutFinished += Generate;
+        RandomiseSeed();
+        Generate();
     }
 
     public override void CacheReferences()

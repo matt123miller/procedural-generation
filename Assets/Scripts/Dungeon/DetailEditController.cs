@@ -11,7 +11,7 @@ public class DetailEditController : MonoBehaviour
 
     // All the children components;
     private Transform detailPanel;
-	private InputField seedField;
+    private InputField seedField;
 
 
 
@@ -19,11 +19,11 @@ public class DetailEditController : MonoBehaviour
     void Awake()
     {
         dungeonGen = GameObject.FindWithTag("DungeonGenerator").GetComponent<DungeonGenerator>();
-		seedField = GetComponentInChildren<InputField>();
+        seedField = GetComponentInChildren<InputField>();
         detailPanel = transform.Find("Details Panel");
         detailPanel.gameObject.SetActive(false);
 
-        AsyncSceneTransition.ScreenFade.fadeOutFinished += EnableDetails;
+        EnableDetails();
     }
 
     void EnableDetails()
@@ -35,23 +35,23 @@ public class DetailEditController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-		// Set the ranges of things here based on the dungeon generator?
+        // Set the ranges of things here based on the dungeon generator?
 
-		seedField.text = dungeonGen.seed.ToString();
+        seedField.text = dungeonGen.seed.ToString();
     }
 
 
     public void SetSeed()
     {
-		Debug.Log("setting seed");
+        Debug.Log("setting seed");
         dungeonGen.seed = int.Parse(seedField.text);
     }
 
     public void RandomiseSeed()
     {
-		var rand = new System.Random();
+        var rand = new System.Random();
         int seed = rand.Next();
-		seedField.text = seed.ToString();
+        seedField.text = seed.ToString();
         SetSeed();
     }
 }

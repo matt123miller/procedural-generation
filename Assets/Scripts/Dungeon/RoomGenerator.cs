@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -78,13 +78,13 @@ namespace Dungeon
 
                 // TODO: Somehow make this recursive instead of a weird loopback thing?
                 // This will be reused later
-//                bool loopback = optionalRoomLoopbacks != 0 && (successes % optionalRoomLoopbacks + 2) == 0;
-//                if (loopback)
-//                {
-//                    // Should we loop back to a previous room and try to place from there?
-//                    prevIndexMod = successes - Random.Range(1, optionalRoomLoopbacks + 1);
-//                    prevIndexMod = Mathf.Min(0, prevIndexMod);
-//                }
+                bool loopback = optionalRoomLoopbacks != 0 && (successes % optionalRoomLoopbacks + 2) == 0;
+                if (loopback)
+                {
+                    // Should we loop back to a previous room and try to place from there?
+                    prevIndexMod = successes - Random.Range(1, optionalRoomLoopbacks + 1);
+                    prevIndexMod = Mathf.Min(0, prevIndexMod);
+                }
 
 
                 Room adjoiningRoom = rooms[prevIndexMod];

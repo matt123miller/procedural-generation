@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
@@ -22,8 +22,8 @@ namespace Dungeon
             material = _material;
             neighbours = new Dictionary<Vector3, Room>();
         }
-            
-        public void CreateRoom()
+
+        public void Create()
         {
             tiles = GenerateTiles();
 //            walls = GenerateWalls();
@@ -32,15 +32,18 @@ namespace Dungeon
         private Transform[,] GenerateTiles()
         {
             Transform[,] tiles = new Transform[width, height];
-
+            var pos = transform.position;
+            int baseX = (int)pos.x;
+            int baseZ = (int)pos.z;
             for (int w = 0; w < width; w++)
             {
                 for (int h = 0; h < height; h++)
                 {
                     // Offset by 1 all the time so they're inside the walls.
-                    var tile = CreateFloor(w + 1, h + 1);
+                    var tile = CreateFloor(w + baseX +  1, h + baseZ + 1);
                     tile.GetComponent<MeshRenderer>().sharedMaterial = material;
                     tiles[w, h] = tile.transform;
+                    transform.AddChild(tile.transform);
                 }
             }
 

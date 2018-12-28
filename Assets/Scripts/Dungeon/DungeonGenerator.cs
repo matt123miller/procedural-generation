@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -82,8 +82,8 @@ namespace Dungeon
 
         private void ResizeDungeon(List<Room> rooms)
         {
-            var maxWidth = rooms.Max(r => r.transform.position.x);
-            var maxHeight = rooms.Max(r => r.transform.position.z);
+            maxWidth = (int)rooms.Max(r => r.transform.position.x);
+            maxHeight = (int)rooms.Max(r => r.transform.position.z);
         }
 
         private void UpdateGridWithRooms(List<Room> rooms)

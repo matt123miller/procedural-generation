@@ -4,7 +4,7 @@ using Dungeon;
 
 public class Corridor : Room
 {
-    public override void SetupRoom(int _width, int _height, Material _material)
+    public override void InitialiseRoomData(int _width, int _height, Material _material)
     {
         bool horizontal = Random.Range(0, 2) % 2 == 0;
         int w, h;
@@ -20,7 +20,7 @@ public class Corridor : Room
             h = _height * 2;
         }
         print("LOL THIS IS A CORRIDOR NOT A ROOM, WHAT A TROLL!");
-        base.SetupRoom(w, h, _material);
+        base.InitialiseRoomData(w, h, _material);
     }
 
 }

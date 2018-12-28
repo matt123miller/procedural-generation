@@ -5,6 +5,7 @@ using UnityEngine;
 public struct Layers{
 
     public static int Wall = LayerMask.NameToLayer("Wall");
+    public static int Door = LayerMask.NameToLayer("Door");
     public static int Floor = LayerMask.NameToLayer("Floor");
     public static int Eenmy = LayerMask.NameToLayer("Enemy");
     public static int Friendly = LayerMask.NameToLayer("Friendly");

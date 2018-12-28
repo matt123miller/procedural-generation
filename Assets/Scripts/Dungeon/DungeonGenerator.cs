@@ -56,20 +56,20 @@ namespace Dungeon
         {
             Random.InitState(seed);
 
-            GenerateDungeon();
+            InitialiseDungeon();
 
             var rooms = roomGen.Generate(dungeonSize);
             // Change dungeon size to be smallest size that fits all rooms.
             var graph = graphGen.Generate(rooms);
-            corridorGen.Generate(rooms); // Will also accept the generated graph 
-            //ResizeDungeon(rooms);
+            
+            ResizeDungeon(rooms);
             //UpdateGridWithRooms(roomGen.rooms);
             //spawnPlayer.Spawn(rooms.First());
 
             //print(this);
         }
 
-        private void GenerateDungeon()
+        private void InitialiseDungeon()
         {
             // Remove any existing dungeon.
             transform.DestroyChildren();
@@ -82,8 +82,8 @@ namespace Dungeon
 
         private void ResizeDungeon(List<Room> rooms)
         {
-            var maxWidth = rooms.Max(r => r.transform.position.x);
-            var maxHeight = rooms.Max(r => r.transform.position.z);
+            maxWidth = (int)rooms.Max(r => r.transform.position.x);
+            maxHeight = (int)rooms.Max(r => r.transform.position.z);
         }
 
         private void UpdateGridWithRooms(List<Room> rooms)
@@ -108,7 +108,6 @@ namespace Dungeon
 
         public void SetSeed(int _seed)
         {
-
             Debug.Log("seed set to " + seed);
             seed = _seed;
         }

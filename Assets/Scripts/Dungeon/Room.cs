@@ -6,99 +6,51 @@ using UnityEngine;
 namespace Dungeon
 {
 
-    public class Room : MonoBehaviour
+    public class Room : ProceduralObject
     {
-        #region Rect bounds and manipulation
-        public float Top
-        {
-            get
-            {
-                return transform.position.z + height;
-            }
-        }
-        public float Bottom
-        {
-            get
-            {
-                return transform.position.z;
-            }
-        }
-        public float Left
-        {
-            get
-            {
-                return transform.position.x;
-            }
-        }
-        public float Right
-        {
-            get
-            {
-                return transform.position.x + width;
-            }
-        }
-        public Vector3 Centre
-        {
-            get
-            {
-                return _centre;
-            }
-            set
-            {
-                _centre = value;
-                transform.position = new Vector3((int)(value.x - width / 2), 0, (int)(value.z - width / 2));
-            }
-        }
-        public void SetPosition(Vector3 newPos)
-        {
-            transform.position = newPos;
-            _centre = new Vector3(newPos.x + width / 2, 0, newPos.z + width / 2);
-        }
-
-        #endregion
-        // Always treat width as X and height as Y;
-        public int width, height;
-        public int floorWidth, floorHeight;
-        [SerializeField]
-        private Vector3 _centre;
         private Material material;
         public Transform[,] tiles;
         public Transform[] walls;
 
         public Dictionary<Vector3, Room> neighbours;
 
-        public virtual void SetupRoom(int _width, int _height, Material _material)
+        public virtual void InitialiseRoomData(int _width, int _height, Material _material)
         {
             width = _width;
             height = _height;
-            floorWidth = _width - 2;
-            floorHeight = _height - 2;
             _centre = new Vector3(width / 2, 0, height / 2);
             material = _material;
             neighbours = new Dictionary<Vector3, Room>();
-            
-            tiles = GenerateTiles();
-            walls = GenerateWalls();
         }
 
-        public Transform[,] GenerateTiles()
+        public void Create()
+        {
+            tiles = GenerateTiles();
+//            walls = GenerateWalls();
+        }
+
+        private Transform[,] GenerateTiles()
         {
             Transform[,] tiles = new Transform[width, height];
-
-            for (int w = 0; w < floorWidth; w++)
+            var pos = transform.position;
+            int baseX = (int)pos.x;
+            int baseZ = (int)pos.z;
+            for (int w = 0; w < width; w++)
             {
-                for (int h = 0; h < floorHeight; h++)
+                for (int h = 0; h < height; h++)
                 {
                     // Offset by 1 all the time so they're inside the walls.
-                    var tile = CreateFloor(w + 1, h + 1);
+                    var tile = CreateFloor(w + baseX +  1, h + baseZ + 1);
+                    tile.GetComponent<MeshRenderer>().sharedMaterial = material;
                     tiles[w, h] = tile.transform;
+                    transform.AddChild(tile.transform);
                 }
             }
 
             return tiles;
         }
 
-        public Transform[] GenerateWalls()
+        private Transform[] GenerateWalls()
         {
             List<Transform> walls = new List<Transform>();
 
@@ -107,7 +59,7 @@ namespace Dungeon
             {
                 int z = (height - 1) * i;
                 // Make the walls along the width
-                for (int w = 0; w < floorWidth; w++)
+                for (int w = 0; w < width; w++)
                 {
                     var wall = CreateWall(w + 1, z);
                     walls.Add(wall.transform);
@@ -115,7 +67,7 @@ namespace Dungeon
                 }
                 int x = (width - 1) * i;
                 // Make the walls along height
-                for (int h = 0; h < floorHeight; h++)
+                for (int h = 0; h < height; h++)
                 {
                     var wall = CreateWall(x, h + 1);
                     walls.Add(wall.transform);
@@ -130,33 +82,6 @@ namespace Dungeon
             walls.Add(CreateWall(width - 1, height - 1).transform);
 
             return walls.ToArray();
-        }
-
-        private GameObject CreateWall(int x, int z)
-        {
-            var wall = CreatePrimitive(x, z, PrimitiveType.Cube);
-            wall.transform.Translate(0, 0.5f, 0);
-            wall.layer = Layers.Wall;
-            wall.name = "Wall";
-            return wall;
-        }
-
-        private GameObject CreateFloor(int x, int z)
-        {
-            var tile = CreatePrimitive(x, z, PrimitiveType.Quad);
-            tile.transform.Rotate(90, 0, 0);
-            tile.layer = Layers.Floor;
-            tile.name = "Floor";
-            tile.GetComponent<MeshRenderer>().sharedMaterial = material;
-            return tile;
-        }
-
-        private GameObject CreatePrimitive(int x, int z, PrimitiveType type)
-        {
-            var primitive = GameObject.CreatePrimitive(type);
-            primitive.transform.position = new Vector3(x, 0, z);
-            primitive.transform.SetParent(transform);
-            return primitive;
         }
 
 
@@ -177,6 +102,8 @@ namespace Dungeon
 
             if (_floorDimensions)
             {
+                // Unsure about all the -2.
+                // Doesn't that just all cancel out?
                 topLeft = this.Left - 2 < _other.Right - 2 && this.Right - 2 > _other.Left - 2;
                 bottomRight = this.Top - 2 > _other.Bottom - 2 && this.Bottom - 2 < _other.Top - 2;
             }

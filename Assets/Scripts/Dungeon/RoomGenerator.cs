@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,7 +21,7 @@ namespace Dungeon
         [Range(0, 20)] public int corridorChance = 5;
         public int roomPlacementAttempts = 10;
         public Material[] materials;
-        private Vector3[] directions = new Vector3[] { Vector3.forward, Vector3.right, Vector3.back, Vector3.left };
+        private readonly Vector3[] directions = new Vector3[] { Vector3.forward, Vector3.right, Vector3.back, Vector3.left };
 
         public List<Room> rooms;
 
@@ -36,7 +36,6 @@ namespace Dungeon
             if (EditorApplication.isPlaying)
             {
                 StartCoroutine(CreateRooms(dungeonSize));
-
             }
 
             return rooms;
@@ -54,20 +53,20 @@ namespace Dungeon
 
                 int w = Random.Range(minWidth, maxWidth);
                 int h = Random.Range(minHeight, maxHeight);
-                var mat = materials[Random.Range(0, materials.Length)];
+                var mat = materials.random();
 
+                // Corridors are still a type of room, just with a different data initialistation
                 Room room = Random.Range(0, 100) > corridorChance ?
                                                     parent.AddComponent<Room>() :
                                                     parent.AddComponent<Corridor>();
-                room.SetupRoom(w, h, mat);
 
-                //TODO: Consider calling the room.createwalls() and createTiles() methods in this file, but only once we know everything is ok.
-                // This would speed up the failures as it won't create and then destory 100+ objects.
+                room.InitialiseRoomData(w, h, mat);
 
                 // Where to place the room?
 
                 if (i == 0)
-                { // The first room should start at 0, makes certain things easier.
+                {
+                    // The first room should start at 0, makes certain things easier.
                     room.transform.position = Vector3.zero;
                     rooms.Add(room);
                     successes++;

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
@@ -14,19 +14,22 @@ namespace Dungeon
 
         public Dictionary<Vector3, Room> neighbours;
 
-        public virtual void SetupRoom(int _width, int _height, Material _material)
+        public virtual void InitialiseRoomData(int _width, int _height, Material _material)
         {
             width = _width;
             height = _height;
             _centre = new Vector3(width / 2, 0, height / 2);
             material = _material;
             neighbours = new Dictionary<Vector3, Room>();
+        }
             
+        public void CreateRoom()
+        {
             tiles = GenerateTiles();
-            //walls = GenerateWalls();
+//            walls = GenerateWalls();
         }
 
-        public Transform[,] GenerateTiles()
+        private Transform[,] GenerateTiles()
         {
             Transform[,] tiles = new Transform[width, height];
 
@@ -44,7 +47,7 @@ namespace Dungeon
             return tiles;
         }
 
-        public Transform[] GenerateWalls()
+        private Transform[] GenerateWalls()
         {
             List<Transform> walls = new List<Transform>();
 
@@ -96,6 +99,8 @@ namespace Dungeon
 
             if (_floorDimensions)
             {
+                // Unsure about all the -2.
+                // Doesn't that just all cancel out?
                 topLeft = this.Left - 2 < _other.Right - 2 && this.Right - 2 > _other.Left - 2;
                 bottomRight = this.Top - 2 > _other.Bottom - 2 && this.Bottom - 2 < _other.Top - 2;
             }

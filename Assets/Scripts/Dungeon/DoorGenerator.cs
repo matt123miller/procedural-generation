@@ -3,11 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Dungeon
 {
     public class DoorGenerator : MonoBehaviour
     {
+        private readonly Vector3[] directions = new Vector3().CardinalDirections();
 
         public List<Door> doors;
 
@@ -16,8 +18,8 @@ namespace Dungeon
             // Sanity check/early returns
             if (rooms.Count < 2)
             {
-                throw new ArgumentOutOfRangeException(
-                    $"{rooms.Count} is not enough rooms to create doors between them");
+                var failMessage = $"{rooms.Count} is not enough rooms to create doors between them";
+                throw new ArgumentOutOfRangeException(failMessage);
             }
 
             // Loop the rooms from first to penultimate 

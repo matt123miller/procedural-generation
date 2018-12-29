@@ -1,26 +1,33 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public static class Vector3Extensions
 {
+    // None of these compass point things work by calling e.g. Vector3.West() because you can't extend
+    // the Vector3 class with a static, standalone, function, only add new instance methods.
     public static Vector3 North()
     {
-        return new Vector3(0, 0, 1);
+        return Vector3.forward;
     }
 
     public static Vector3 South()
     {
-        return new Vector3(0, 0, -1);
+        return Vector3.back;
     }
 
     public static Vector3 East()
     {
-        return new Vector3(1, 0, 0);
+        return Vector3.right;
     }
 
     public static Vector3 West()
     {
-        return new Vector3(-1, 0, 0);
+        return Vector3.left;
+    }
+
+    public static Vector3[] CardinalDirections(this Vector3 vector3)
+    {
+        return new Vector3[] { Vector3.forward, Vector3.right, Vector3.back, Vector3.left };
     }
 
     public static Vector2 To2(this Vector3 vector)

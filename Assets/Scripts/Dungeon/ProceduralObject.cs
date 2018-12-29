@@ -9,10 +9,11 @@ namespace Dungeon
 
         #region Rect bounds and manipulation
 
-        protected float Top => transform.position.z + height;
-        protected float Bottom => transform.position.z;
-        protected float Left => transform.position.x;
-        protected float Right => transform.position.x + width;
+        // Make these ints? 
+        internal float Top => transform.position.z + height;
+        internal float Bottom => transform.position.z;
+        internal float Left => transform.position.x;
+        internal float Right => transform.position.x + width;
 
         public Vector3 Centre
         {

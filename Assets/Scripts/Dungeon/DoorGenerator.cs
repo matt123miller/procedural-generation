@@ -32,14 +32,14 @@ namespace Dungeon
                 var relationship = FindRoomRelationship(currentRoom, nextRoom);
 
                 // Find a position along the shared boundary to place a door at
-                var boundary = FindDoorPositionAlongBoundary(relationships);
+                var doorPosition = FindDoorPositionAlongBoundary(relationship);
                 
                 // Add doors at neighbour boundaries
-        
+                var door = CreateDoor(doorPosition);
 
                 // Add some sort of reference to each room or door, linking things together
 
-
+                
             }
 
 
@@ -50,13 +50,15 @@ namespace Dungeon
         {
             // This method could be made to use Tuple<Room, Room, Vector3> instead but I don't like the syntax.
             // So I'm gonna lean on some DSL struct instead. Kind of like passing objects around in JS or Python
-
-            var currentToNext = nextRoom.neighbours.First(n => n.Value.roomID == currentRoom.roomID);
+            
+            var currentToNext = currentRoom.neighbours.First(n => n.Value.roomID == nextRoom.roomID);
 
             return new RoomTransitionRelationship(currentRoom, nextRoom, currentToNext.Key);
         }
 
-            
+        
+        private Vector3 FindDoorPositionAlongBoundary(RoomTransitionRelationship relationship)
+        {   
             /**
              *
              * If they share a top/bottom boundary then....
@@ -64,22 +66,63 @@ namespace Dungeon
              * Too tired tonight
              * 
              */
-        }
+            var from = relationship.from;
+            var to = relationship.to;
+            var viaDirection = relationship.via;
 
-        private Dictionary<Vector3, Room> FindRoomRelationships(Room currentRoom, Room nextRoom)
-        {
-            // This all feels far too verbose and wasteful.
-
-            var currentToNext = nextRoom.neighbours.First(n => n.Value.roomID == currentRoom.roomID);
-            var nextToCurrent = currentRoom.neighbours.First(n => n.Value.roomID == nextRoom.roomID);
-
-            var relationships = new Dictionary<Vector3, Room>()
+            int maxBound, minBound, frozenEdgeValue;
+            var chosenPosition = new Vector3();
+            
+            if (viaDirection == Vector3.up || viaDirection == Vector3.down)
             {
-                {currentToNext.Key, currentToNext.Value},
-                {nextToCurrent.Key, nextToCurrent.Value}
-            };
+                /**
+                 * The rooms share a top/bottom edge and will have a door between them via this edge.
+                 */
+            }
+            else if (viaDirection == Vector3.left || viaDirection == Vector3.right)
+            {
+                /**
+                 * The rooms share a right/left edge and will have a door between them via this edge.
+                 * Therefor we the x value will be from that edge and the y value between the
+                 * min and max values of the y intersection
+                 */
+                
+                int maxTop = (int)Math.Max(from.Top, to.Top);
+                int minTop = (int)Math.Min(from.Top, to.Top);
 
-            return relationships;
+                int maxBottom = (int)Math.Max(from.Bottom, to.Bottom);
+                int minBottom = (int)Math.Min(from.Bottom, to.Bottom);
+
+                maxBound = maxTop - (maxTop - minTop);
+                minBound = minTop + (maxBottom - minBottom);
+
+                int valueAlongBoundary = RandomValueAlongBoundary(minBound, maxBound);
+                
+                frozenEdgeValue = viaDirection == Vector3.left ? (int) from.Left : (int) from.Right;
+
+                chosenPosition = new Vector3(frozenEdgeValue, 0, valueAlongBoundary);
+            }
+            
+            // Call a function to get a random position along our computed boundary area.
+            
+            return chosenPosition;
         }
+
+        private int RandomValueAlongBoundary(int minBound, int maxBound)
+        {
+            // Create a function in case I need to do some + / - stuff to get it within walls.
+            return Random.Range(minBound, maxBound);
+        }
+        
+        
+        private Door CreateDoor(Vector3 doorPosition)
+        {
+            var doorGo = Instantiate(Resources.Load("Prefabs/Door", typeof(GameObject))) as GameObject;
+            var door = doorGo.GetComponent<Door>();
+            door.InitialiseWithData(doorPosition);
+
+            return door;
+        }
+
     }
 }

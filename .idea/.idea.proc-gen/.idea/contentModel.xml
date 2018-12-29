@@ -432,6 +432,7 @@
             <e p="RangedFloat.cs" t="Include" />
             <e p="Room.cs" t="Include" />
             <e p="RoomGenerator.cs" t="Include" />
+            <e p="RoomTransitionRelationship.cs" t="Include" />
           </e>
           <e p="Extensions" t="Include">
             <e p="ArrayExtensions.cs" t="Include" />

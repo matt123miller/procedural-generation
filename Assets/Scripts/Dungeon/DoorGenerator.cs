@@ -28,8 +28,8 @@ namespace Dungeon
                 Room currentRoom = rooms[i];
                 Room nextRoom = rooms[i + 1];
 
-                // Find shared boundary relationship as rooms usually have more than 1 door
-                var relationships = FindRoomRelationships(currentRoom, nextRoom);
+                // Find the correct shared boundary relationship as rooms usually have more than 1 door
+                var relationship = FindRoomRelationship(currentRoom, nextRoom);
 
                 // Find a position along the shared boundary to place a door at
                 var boundary = FindDoorPositionAlongBoundary(relationships);
@@ -46,9 +46,16 @@ namespace Dungeon
             return new List<Door>();
         }
 
-        private object FindDoorPositionAlongBoundary(Dictionary<Vector3, Room> relationships)
+        private RoomTransitionRelationship FindRoomRelationship(Room currentRoom, Room nextRoom)
         {
-            throw new NotImplementedException();
+            // This method could be made to use Tuple<Room, Room, Vector3> instead but I don't like the syntax.
+            // So I'm gonna lean on some DSL struct instead. Kind of like passing objects around in JS or Python
+
+            var currentToNext = nextRoom.neighbours.First(n => n.Value.roomID == currentRoom.roomID);
+
+            return new RoomTransitionRelationship(currentRoom, nextRoom, currentToNext.Key);
+        }
+
             
             /**
              *

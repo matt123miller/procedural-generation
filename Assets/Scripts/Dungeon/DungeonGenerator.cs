@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System;
+using System.Collections;
 using Random = UnityEngine.Random;
 
 
@@ -33,6 +34,7 @@ namespace Dungeon
         private CorridorGenerator corridorGen;
         private SpawnPlayer spawnPlayer;
 
+        private List<Room> rooms;
         private void Awake()
         {
             CacheReferences();
@@ -60,9 +62,9 @@ namespace Dungeon
 
             InitialiseDungeon();
 
-            var rooms = roomGen.Generate(dungeonSize);
-            var doors = doorGen.Generate(rooms);
-            
+            rooms = roomGen.Generate(dungeonSize);
+
+            StartCoroutine(co());
             
             // Change dungeon size to be smallest size that fits all rooms.
             ResizeDungeon(rooms);
@@ -72,6 +74,12 @@ namespace Dungeon
             //print(this);
         }
 
+        private IEnumerator co()
+        {
+            yield return new WaitForSeconds(6);
+            var doors = doorGen.Generate(rooms);
+        }
+        
         private void InitialiseDungeon()
         {
             // Remove any existing dungeon.

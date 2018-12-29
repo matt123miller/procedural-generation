@@ -28,7 +28,7 @@ namespace Dungeon
         public void Create()
         {
             tiles = GenerateTiles();
-            walls = GenerateWalls();
+//            walls = GenerateWalls();
         }
 
         private Transform[,] GenerateTiles()

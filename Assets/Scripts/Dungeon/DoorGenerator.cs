@@ -93,12 +93,14 @@ namespace Dungeon
                 int maxBottom = (int)Math.Max(from.Bottom, to.Bottom);
                 int minBottom = (int)Math.Min(from.Bottom, to.Bottom);
 
-                maxBound = maxTop - (maxTop - minTop);
-                minBound = minTop + (maxBottom - minBottom);
-
+                maxBound = maxTop - (maxTop - minTop) - 1;
+                minBound = minBottom + (maxBottom - minBottom) + 1;
+                
+                // Call a function to get a random position along our computed boundary area.
                 int valueAlongBoundary = RandomValueAlongBoundary(minBound, maxBound);
                 
-                frozenEdgeValue = viaDirection == Vector3.left ? (int) from.Left : (int) from.Right;
+                // from.right + 1 is to offset 1 space so doors are correctly between rooms
+                frozenEdgeValue = viaDirection == Vector3.left ? (int) from.Left : (int) from.Right + 1 ;
 
                 chosenPosition = new Vector3(frozenEdgeValue, 0, valueAlongBoundary);
             }

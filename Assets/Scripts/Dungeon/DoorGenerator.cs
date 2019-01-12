@@ -30,14 +30,12 @@ namespace Dungeon
 
                 // Find the correct shared boundary relationship as rooms usually have more than 1 door
                 var relationship = FindRoomRelationship(currentRoom, nextRoom);
-
                 // Find a position along the shared boundary to place a door at
                 var doorPosition = FindDoorPositionAlongBoundary(relationship);
-                
                 // Add doors at neighbour boundaries
                 var door = CreateDoor(doorPosition);
-
                 // Add some sort of reference to each room or door, linking things together
+                
 
                 
             }
@@ -73,17 +71,34 @@ namespace Dungeon
             int maxBound, minBound, frozenEdgeValue;
             var chosenPosition = new Vector3();
             
-            if (viaDirection == Vector3.up || viaDirection == Vector3.down)
+            if (viaDirection == Vector3.forward || viaDirection == Vector3.back)
             {
                 /**
-                 * The rooms share a top/bottom edge and will have a door between them via this edge.
+                 * The rooms share a left/right edge and will have a door between them via this edge.
+                 * Therefor the y value will be from that edge and the x value between the
+                 * min and max values of the x intersection
                  */
+                 
+                int maxLeft = (int)Math.Max(from.Left, to.Left);
+                int minLeft = (int)Math.Min(from.Left, to.Left);
+
+                int maxRight = (int)Math.Max(from.Right, to.Right);
+                int minRight = (int)Math.Min(from.Right, to.Right);
+
+                minBound = minLeft + (maxLeft - minLeft) + 1;
+                maxBound = maxRight - (maxRight - minRight) - 1;
+
+                int valueAlongBoundary = RandomValueAlongBoundary(minBound, maxBound);
+
+                frozenEdgeValue = viaDirection == Vector3.forward ? (int) from.Top + 1 : (int) from.Bottom;
+                
+                chosenPosition = new Vector3(valueAlongBoundary, 0, frozenEdgeValue);
             }
             else if (viaDirection == Vector3.left || viaDirection == Vector3.right)
             {
                 /**
                  * The rooms share a right/left edge and will have a door between them via this edge.
-                 * Therefor we the x value will be from that edge and the y value between the
+                 * Therefor the x value will be from that edge and the y value between the
                  * min and max values of the y intersection
                  */
                 

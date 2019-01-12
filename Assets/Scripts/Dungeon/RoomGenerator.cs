@@ -21,7 +21,7 @@ namespace Dungeon
         [Range(0, 20)] public int corridorChance = 5;
         public int roomPlacementAttempts = 10;
         public Material[] materials;
-        private readonly Vector3[] directions = { Vector3.left, Vector3.right };
+        private readonly Vector3[] directions = { Vector3.forward, Vector3.back };
 
         public List<Room> rooms;
 

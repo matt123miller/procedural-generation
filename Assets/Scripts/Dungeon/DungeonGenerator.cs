@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System;
+using System.Collections;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 
@@ -18,20 +20,26 @@ namespace Dungeon
 
     public class DungeonGenerator : ProceduralGenerator
     {
+        // I feel like these values are kind of meaningless right now.
+        // But I do want to use these to constrain room placement
+        // in a given direction in the future.
         [Range(40, 60)] public int minWidth;
         [Range(60, 120)] public int maxWidth;
         [Range(40, 60)] public int minHeight;
         [Range(60, 120)] public int maxHeight;
-        public bool stepThrough = true;
         public Vector2 dungeonSize;
 
+        public bool stepThrough = true;
+       
         private int[,] grid;
 
         private RoomGenerator roomGen;
+        private DoorGenerator doorGen;
         private GraphGenerator graphGen;
         private CorridorGenerator corridorGen;
         private SpawnPlayer spawnPlayer;
 
+        private List<Room> rooms;
         private void Awake()
         {
             CacheReferences();
@@ -46,6 +54,7 @@ namespace Dungeon
         public override void CacheReferences()
         {
             roomGen = GetComponent<RoomGenerator>();
+            doorGen = GetComponent<DoorGenerator>();
             graphGen = GetComponent<GraphGenerator>();
             corridorGen = GetComponent<CorridorGenerator>();
             spawnPlayer = GetComponent<SpawnPlayer>();
@@ -57,8 +66,13 @@ namespace Dungeon
             Random.InitState(seed);
 
             InitialiseDungeon();
+            
+            roomGen.EmptyContents(true);
+            doorGen.EmptyContents(true);
 
-            var rooms = roomGen.Generate(dungeonSize);
+            rooms = roomGen.Generate(dungeonSize);
+
+            StartCoroutine(co());
             
             // Change dungeon size to be smallest size that fits all rooms.
             ResizeDungeon(rooms);
@@ -68,6 +82,12 @@ namespace Dungeon
             //print(this);
         }
 
+        private IEnumerator co()
+        {
+            yield return new WaitForSeconds(6);
+            var doors = doorGen.Generate(rooms);
+        }
+        
         private void InitialiseDungeon()
         {
             // Remove any existing dungeon.

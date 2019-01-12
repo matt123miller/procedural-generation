@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using UnityEditor;
 using UnityEngine;
-//using Random = System.Random;
+
 
 namespace Dungeon
 {
-    public class RoomGenerator : MonoBehaviour
+    public class RoomGenerator : MonoBehaviour, IEmptyable
     {
         [Range(10, 18)] public int minWidth;
         [Range(18, 30)] public int maxWidth;
@@ -16,21 +16,20 @@ namespace Dungeon
         [Range(18, 30)] public int maxHeight;
         public bool stepThrough = true;
         private Vector2 dungeonSize;
-        public Transform dungeonParent;
+        public Transform roomParent;
         [Range(0, 5)] public int optionalRoomLoopbacks = 0;
         [Range(0, 20)] public int corridorChance = 5;
         public int roomPlacementAttempts = 10;
         public Material[] materials;
-        private readonly Vector3[] directions = new Vector3[] { Vector3.forward, Vector3.right, Vector3.back, Vector3.left };
+        private readonly Vector3[] directions = { Vector3.forward, Vector3.right, Vector3.back, Vector3.left };
 
         public List<Room> rooms;
 
         public List<Room> Generate(Vector2 _dungeonSize)
         {
-            RemoveChildren();
-
-            rooms = new List<Room>();
             dungeonSize = _dungeonSize;
+            EmptyContents(false);
+            rooms = new List<Room>();
 
             //var createRoomsRoutine = CreateRooms(dungeonSize);
             if (EditorApplication.isPlaying)
@@ -49,7 +48,7 @@ namespace Dungeon
             {
                 var parent = new GameObject();
                 parent.name = "Room " + successes;
-                parent.transform.SetParent(dungeonParent);
+                parent.transform.SetParent(roomParent);
                 
                 int w = Random.Range(minWidth, maxWidth);
                 int h = Random.Range(minHeight, maxHeight);
@@ -60,7 +59,7 @@ namespace Dungeon
                                                     parent.AddComponent<Room>() :
                                                     parent.AddComponent<Corridor>();
                 
-                room.InitialiseRoomData(w, h, mat);
+                room.InitialiseWithData(i, w, h, mat);
 
                 // Where to place the room?
 
@@ -93,7 +92,7 @@ namespace Dungeon
                 
                 Vector3 chosenRootPosition = DecideRoomPlacement(room, adjoiningRoom, direction);
 
-                room.transform.position = chosenRootPosition;
+                room.SetPosition(chosenRootPosition);
 
                 // Is that space occupied somehow?
                 bool overlap = rooms.Any(r => room.IsOverlapping(r, true));
@@ -128,6 +127,12 @@ namespace Dungeon
             
         }
 
+        /// <summary>
+        ///  TODO: Change args to use RoomTransitionRelationship
+        /// </summary>
+        /// <param name="room"></param>
+        /// <param name="adjoiningRoom"></param>
+        /// <param name="direction"></param>
         private static void AssignRoomNeighbours(Room room, Room adjoiningRoom, Vector3 direction)
         {
             adjoiningRoom.neighbours[direction] = room;
@@ -191,12 +196,17 @@ namespace Dungeon
             return sb.ToString();
         }
 
-        private void RemoveChildren()
+        public void EmptyContents(bool purgeList)
         {
-            for (int i = dungeonParent.childCount; i > 0; i--) // Safer to go back to front?
+            for (int i = roomParent.childCount; i > 0; i--) // Safer to go back to front?
             {
-                var child = dungeonParent.GetChild(0);
+                var child = roomParent.GetChild(0);
                 DestroyImmediate(child.gameObject);
+            }
+
+            if (purgeList)
+            {
+                rooms = new List<Room>();
             }
         }
     }

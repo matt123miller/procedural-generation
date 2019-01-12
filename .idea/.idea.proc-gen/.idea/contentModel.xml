@@ -424,6 +424,7 @@
             <e p="CorridorGenerator.cs" t="Include" />
             <e p="DetailEditController.cs" t="Include" />
             <e p="Door.cs" t="Include" />
+            <e p="DoorGenerator.cs" t="Include" />
             <e p="DungeonGenerator.cs" t="Include" />
             <e p="GraphGenerator.cs" t="Include" />
             <e p="MinMaxRangeAttribute.cs" t="Include" />
@@ -431,6 +432,10 @@
             <e p="RangedFloat.cs" t="Include" />
             <e p="Room.cs" t="Include" />
             <e p="RoomGenerator.cs" t="Include" />
+            <e p="RoomTransitionRelationship.cs" t="Include" />
+            <e p="Types" t="Include">
+              <e p="IEmptyable.cs" t="Include" />
+            </e>
           </e>
           <e p="Extensions" t="Include">
             <e p="ArrayExtensions.cs" t="Include" />

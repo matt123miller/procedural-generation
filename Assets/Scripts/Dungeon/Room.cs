@@ -8,14 +8,16 @@ namespace Dungeon
 
     public class Room : ProceduralObject
     {
+        public int roomID;
         private Material material;
         public Transform[,] tiles;
         public Transform[] walls;
 
         public Dictionary<Vector3, Room> neighbours;
 
-        public virtual void InitialiseRoomData(int _width, int _height, Material _material)
+        public virtual void InitialiseWithData(int id, int _width, int _height, Material _material)
         {
+            roomID = id;
             width = _width;
             height = _height;
             _centre = new Vector3(width / 2, 0, height / 2);
@@ -26,7 +28,7 @@ namespace Dungeon
         public void Create()
         {
             tiles = GenerateTiles();
-            walls = GenerateWalls();
+//            walls = GenerateWalls();
         }
 
         private Transform[,] GenerateTiles()
@@ -97,9 +99,9 @@ namespace Dungeon
         public void PlaceRandomly(Vector2 inBounds)
         {
             int randomX = (int)Random.Range(0, inBounds.x - width);
-            int randomY = (int)Random.Range(0, inBounds.y - height);
+            int randomZ = (int)Random.Range(0, inBounds.y - height);
 
-            transform.position = new Vector3(randomX, 0, randomY);
+            SetPosition(new Vector3(randomX, 0, randomZ));
         }
 
 

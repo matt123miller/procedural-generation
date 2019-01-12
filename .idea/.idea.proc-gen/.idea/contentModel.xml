@@ -433,6 +433,9 @@
             <e p="Room.cs" t="Include" />
             <e p="RoomGenerator.cs" t="Include" />
             <e p="RoomTransitionRelationship.cs" t="Include" />
+            <e p="Types" t="Include">
+              <e p="IEmptyable.cs" t="Include" />
+            </e>
           </e>
           <e p="Extensions" t="Include">
             <e p="ArrayExtensions.cs" t="Include" />

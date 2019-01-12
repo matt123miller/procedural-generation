@@ -1,22 +1,22 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace Dungeon
 {
-    public class DoorGenerator : MonoBehaviour
+    public class DoorGenerator : MonoBehaviour, IEmptyable
     {
         private readonly Vector3[] directions = new Vector3().CardinalDirections();
 
         public Transform doorParent;
         public List<Door> doors;
-
+        
         public List<Door> Generate(List<Room> rooms)
         {
+            EmptyContents(false);
             doors = new List<Door>();
+            
             // Sanity check/early returns
             if (rooms.Count < 2)
             {
@@ -38,13 +38,14 @@ namespace Dungeon
                 var door = CreateDoor(doorPosition);
                 // Add some sort of reference to each room or door, linking things together
                 door.CacheNeighbours(relationship);
-                
+    
                 doors.Add(door);            
             }
 
 
             return doors;
         }
+
 
         private RoomTransitionRelationship FindRoomRelationship(Room currentRoom, Room nextRoom)
         {
@@ -130,7 +131,7 @@ namespace Dungeon
         private int RandomValueAlongBoundary(int minBound, int maxBound)
         {
             // Create a function in case I need to do some + / - stuff to get it within walls.
-            return Random.Range(minBound, maxBound);
+            return UnityEngine.Random.Range(minBound, maxBound);
         }
         
         
@@ -145,5 +146,20 @@ namespace Dungeon
             return door;
         }
 
+        public void EmptyContents(bool purgeList)
+        {
+            for (int i = doorParent.childCount; i > 0; i--) // Safer to go back to front?
+            {
+                var child = doorParent.GetChild(0);
+                DestroyImmediate(child.gameObject);
+            }
+
+            if (purgeList)
+            {
+                doors = new List<Door>();
+
+
+            }
+        }
     }
 }

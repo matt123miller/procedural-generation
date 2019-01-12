@@ -20,5 +20,13 @@ namespace Dungeon {
         { 
             SetPosition(position);
         }
+
+        public void CacheNeighbours(RoomTransitionRelationship relationship)
+        {
+            // Probably correct. Revisit if necessary
+            neighbours.Add(relationship.via, relationship.to);
+            var reflectedDirection = Vector3.Reflect(relationship.via, relationship.via);
+            neighbours.Add(reflectedDirection, relationship.from);
+        }
     }
 }

@@ -11,10 +11,12 @@ namespace Dungeon
     {
         private readonly Vector3[] directions = new Vector3().CardinalDirections();
 
+        public Transform doorParent;
         public List<Door> doors;
 
         public List<Door> Generate(List<Room> rooms)
         {
+            doors = new List<Door>();
             // Sanity check/early returns
             if (rooms.Count < 2)
             {
@@ -35,13 +37,13 @@ namespace Dungeon
                 // Add doors at neighbour boundaries
                 var door = CreateDoor(doorPosition);
                 // Add some sort of reference to each room or door, linking things together
+                door.CacheNeighbours(relationship);
                 
-
-                
+                doors.Add(door);            
             }
 
 
-            return new List<Door>();
+            return doors;
         }
 
         private RoomTransitionRelationship FindRoomRelationship(Room currentRoom, Room nextRoom)
@@ -132,9 +134,11 @@ namespace Dungeon
         }
         
         
+        // Should this really be here?
         private Door CreateDoor(Vector3 doorPosition)
         {
-            var doorGo = Instantiate(Resources.Load("Prefabs/Door", typeof(GameObject))) as GameObject;
+            var doorResource = Resources.Load("Prefabs/Door", typeof(GameObject));
+            var doorGo = Instantiate(doorResource, doorParent, true) as GameObject;
             var door = doorGo.GetComponent<Door>();
             door.InitialiseWithData(doorPosition);
 

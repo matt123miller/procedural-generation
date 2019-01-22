@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -61,7 +61,7 @@ namespace Dungeon
         }
 
 
-        public override void Generate()
+        public override async void Generate()
         {
             Random.InitState(seed);
 
@@ -70,9 +70,8 @@ namespace Dungeon
             roomGen.EmptyContents(true);
             doorGen.EmptyContents(true);
 
-            rooms = roomGen.Generate(dungeonSize);
-
-            StartCoroutine(co());
+            rooms = await roomGen.Generate(dungeonSize);
+            var doors = await doorGen.Generate(rooms);
             
             // Change dungeon size to be smallest size that fits all rooms.
             ResizeDungeon(rooms);
@@ -82,11 +81,6 @@ namespace Dungeon
             //print(this);
         }
 
-        private IEnumerator co()
-        {
-            yield return new WaitForSeconds(6);
-            var doors = doorGen.Generate(rooms);
-        }
         
         private void InitialiseDungeon()
         {

@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -12,7 +13,7 @@ namespace Dungeon
         public Transform doorParent;
         public List<Door> doors;
         
-        public List<Door> Generate(List<Room> rooms)
+        public async Task<List<Door>> Generate(List<Room> rooms)
         {
             EmptyContents(false);
             doors = new List<Door>();

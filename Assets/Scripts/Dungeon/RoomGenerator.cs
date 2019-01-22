@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 
 namespace Dungeon
@@ -25,7 +28,7 @@ namespace Dungeon
 
         public List<Room> rooms;
 
-        public List<Room> Generate(Vector2 _dungeonSize)
+        public async Task<List<Room>> Generate(Vector2 _dungeonSize)
         {
             dungeonSize = _dungeonSize;
             EmptyContents(false);
@@ -34,13 +37,13 @@ namespace Dungeon
             //var createRoomsRoutine = CreateRooms(dungeonSize);
             if (EditorApplication.isPlaying)
             {
-                StartCoroutine(CreateRooms(dungeonSize));
+                await CreateRooms(dungeonSize);
             }
 
             return rooms;
         }
 
-        private IEnumerator CreateRooms(Vector2 dungeonSize)
+        private async Task CreateRooms(Vector2 dungeonSize)
         {
             int successes = 0;
 
@@ -105,7 +108,7 @@ namespace Dungeon
                     
                     if (stepThrough && EditorApplication.isPlaying)
                     {
-                        yield return new WaitForSecondsRealtime(0.2f);
+                        await PauseForRoomPlacement();
                     }
                     continue;
                 }
@@ -120,11 +123,16 @@ namespace Dungeon
 
                 if (stepThrough && EditorApplication.isPlaying)
                 {
-                    yield return new WaitForSecondsRealtime(0.2f);
+                    await PauseForRoomPlacement();
                 }
 
             }
             
+        }
+        
+        private Task PauseForRoomPlacement()
+        {
+            return Task.Delay(TimeSpan.FromSeconds(0.2f));
         }
 
         /// <summary>

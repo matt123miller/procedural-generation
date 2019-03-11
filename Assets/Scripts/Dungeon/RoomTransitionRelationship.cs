@@ -8,11 +8,20 @@ namespace Dungeon
         internal readonly Room to;
         internal readonly Vector3 via;
 
-        public RoomTransitionRelationship(Room from, Room to, Vector3 via)
+        public RoomTransitionRelationship( Room from, Room to, Vector3 via )
         {
             this.from = from;
             this.to = to;
             this.via = via;
+        }
+
+        public override string ToString()
+        {
+
+            var str = $"Travelling from room {from.roomID} to room {to.roomID} in the direction of {via}";
+
+
+            return str;
         }
     }
 }

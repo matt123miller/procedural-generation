@@ -4,9 +4,9 @@ namespace Dungeon
 {
     public class Corridor : Room
     {
-        public override void InitialiseWithData(int id, int _width, int _height, Material _material)
+        public override void InitialiseWithData( int id, int _width, int _height, Material _material )
         {
-            bool horizontal = Random.Range(0, 2) % 2 == 0;
+            bool horizontal = Random.Range( 0, 2 ) % 2 == 0;
             int w, h;
 
             if (horizontal)
@@ -19,8 +19,8 @@ namespace Dungeon
                 w = 4;
                 h = _height * 2;
             }
-            print("LOL THIS IS A CORRIDOR NOT A ROOM, WHAT A TROLL!");
-            base.InitialiseWithData(id, w, h, _material);
+            print( "LOL THIS IS A CORRIDOR NOT A ROOM, WHAT A TROLL!" );
+            base.InitialiseWithData( id, w, h, _material );
         }
 
     }

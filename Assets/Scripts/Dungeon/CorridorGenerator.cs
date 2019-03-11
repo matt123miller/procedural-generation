@@ -6,7 +6,7 @@ namespace Dungeon
 {
     public class CorridorGenerator : ProceduralGenerator
     {
-        public void Generate(List<Room> rooms)
+        public void Generate( List<Room> rooms )
         {
 
         }

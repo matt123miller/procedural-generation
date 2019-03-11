@@ -7,8 +7,8 @@ namespace Dungeon
     public class GraphGenerator : MonoBehaviour
     {
         public List<Room> rooms;
-        
-        public Transform Generate(List<Room> _rooms)
+
+        public Transform Generate( List<Room> _rooms )
         {
             rooms = _rooms;
 

@@ -33,4 +33,5 @@ sysinfo.txt
 *.apk
 *.unitypackage
 
-\.idea/\.idea\.proc-gen/\.idea/workspace\.xml
+.idea
+.idea

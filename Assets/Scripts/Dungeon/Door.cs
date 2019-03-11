@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +6,7 @@ namespace Dungeon {
 
     public class Door : ProceduralObject
     {
+        public Dictionary<Vector3, Room> neighbours = new Dictionary<Vector3, Room>();
     
         public Dictionary<Vector3, Room> neighbours;
 

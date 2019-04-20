@@ -33,6 +33,41 @@ namespace Dungeon
             _centre = new Vector3( newPos.x + width / 2, 0, newPos.z + width / 2 );
         }
 
+        /// <summary>
+        /// This assumes both a and b are sized 1x1 unity unit.
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public static bool IsOverlapping(Vector3 a, Vector3 b)
+        {
+            bool topLeft = a.x < b.x + 1 && a.x + 1 > b.x;
+            bool bottomRight = a.z + 1 > b.z && a.z < b.z + 1;
+
+            return topLeft && bottomRight;
+        }
+
+        public static bool IsOverlapping(ProceduralObject a, ProceduralObject b)
+        {
+            if (!b)
+            { return false; }
+            bool topLeft = a.Left < b.Right && a.Right > b.Left;
+            bool bottomRight = a.Top > b.Bottom && a.Bottom < b.Top;
+
+            return topLeft && bottomRight;
+        }
+
+        public bool IsOverlapping(ProceduralObject _other)
+        {
+            if (!_other)
+            { return false; }
+            bool topLeft = this.Left < _other.Right && this.Right > _other.Left;
+            bool bottomRight = this.Top > _other.Bottom && this.Bottom < _other.Top;
+            
+            return topLeft && bottomRight;
+        }
+
+
         #endregion
 
         // Always treat width as X and height as Y;

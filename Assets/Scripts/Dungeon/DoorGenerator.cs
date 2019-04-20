@@ -30,6 +30,7 @@ namespace Dungeon
             Vector3 currentDoorPosition;
             Door currentDoor;
 
+            // could use rooms.Select if I was feeling fancy
             // Loop the rooms from first to penultimate 
             for (int i = 0; i < rooms.Count - 1; i++)
             {
@@ -45,12 +46,29 @@ namespace Dungeon
                 // Add some sort of reference to each room or door, linking things together. Could be handled in CreateDoor?
                 currentDoor.CacheNeighbours( currentRelationship );
 
+                RemoveWallsForDoor( currentRelationship, currentDoor );
+
                 doors.Add( currentDoor );
             }
 
             return doors;
         }
 
+        private void RemoveWallsForDoor( RoomTransitionRelationship currentRelationship, Door door )
+        {
+            // loop both rooms walls, delete the walls in each that overlap with the door
+            var walls1 = currentRelationship.from.walls;
+            var walls2 = currentRelationship.to.walls;
+
+            var target1 = walls1.First(w => ProceduralObject.IsOverlapping(w.position, door.transform.position));
+            var target2 = walls2.First(w => ProceduralObject.IsOverlapping(w.position, door.transform.position));
+
+            print("These 2 walls should be the same");
+            print($"wall 1 -> {target1}, wall 2 -> {target2}");
+
+            Destroy(target1.gameObject);
+            Destroy(target2.gameObject);
+        }
 
         private RoomTransitionRelationship FindRoomRelationship( Room currentRoom, Room nextRoom )
         {

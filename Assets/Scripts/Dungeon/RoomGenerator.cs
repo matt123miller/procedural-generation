@@ -35,11 +35,12 @@ namespace Dungeon
             rooms = new List<Room>();
 
             //var createRoomsRoutine = CreateRooms(dungeonSize);
-            if (EditorApplication.isPlaying)
-            {
+//#if UNITY_EDITOR
+//            if (EditorApplication.isPlaying)
+//            {
                 await CreateRooms( dungeonSize );
-            }
-
+//            }
+//#endif
             return rooms;
         }
 
@@ -106,10 +107,12 @@ namespace Dungeon
                     print( "Failure" );
                     DestroyImmediate( room.gameObject );
 
-                    if (stepThrough && EditorApplication.isPlaying)
+
+                    if (stepThrough)
                     {
                         await PauseForRoomPlacement();
                     }
+
                     continue;
                 }
 
@@ -121,10 +124,12 @@ namespace Dungeon
                 // Assign the room neighbours
                 AssignRoomNeighbours( room, adjoiningRoom, direction );
 
-                if (stepThrough && EditorApplication.isPlaying)
+
+                if (stepThrough )
                 {
                     await PauseForRoomPlacement();
                 }
+
 
             }
 

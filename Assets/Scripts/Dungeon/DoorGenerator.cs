@@ -66,8 +66,8 @@ namespace Dungeon
             print("These 2 walls should be the same");
             print($"wall 1 -> {target1}, wall 2 -> {target2}");
 
-            Destroy(target1.gameObject);
-            Destroy(target2.gameObject);
+            DestroyImmediate(target1.gameObject);
+            DestroyImmediate(target2.gameObject);
         }
 
         private RoomTransitionRelationship FindRoomRelationship( Room currentRoom, Room nextRoom )
